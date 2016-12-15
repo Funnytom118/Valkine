@@ -1,18 +1,121 @@
-http://wiki.ess3.net/wiki/Command_Reference for alphabetical ordering of commands which are currently in Essentials.
+options:
+  prefix:
+  permprefix: vessentials
+  permmsg: &cYou don't have access to this command
+  notonline: &4Error: &cThe specified player isn't online
+  specify: &4Error: &cPlease specify a player.
+  
+#http://wiki.ess3.net/wiki/Command_Reference for alphabetical ordering of commands which are currently in Essentials.
+
 #/bigtree
-command /break
-  permission: vessentials.break
-  permission message: &cYou don't have access to this command
+command /break:
+  permission: {@permprefix}.break
+  permission message: {@permmsg}
   trigger:
     set target-block to air
     send "{@prefix} Block was removed" to player
+    stop
 #/condense
 #/enchant
 #/exp
-#/feed
+command /feed [<Player>]:
+  permission: {permprefix}.feed
+  permission message: {@permmsg}
+  aliases: /eat
+  executable by: players 
+  trigger:
+    if arg 1 isn't specified:
+      set {_waited} to difference between {feed.%player%.lastused} and now
+      if {_waited} is less than a minute:
+        send: "{@prefix} You have to wait another %{_waited}% seconds to execute this command" to player
+        stop
+      if {_waited} is more than a minute:
+        set the player's food level to 10
+        set {feed.%player%.lastused} to now
+        stop
+    if arg 1 is specified:
+      if arg 1 is online:
+        player has permission "{@permprefix}.feed.others":
+          set arg 1's food level to 10
+          stop
+        else:
+          send "{@permmsg}" to player
+      else:
+        send "{@notonline}" to player
 #/firework
 #/fly
-#/gamemode
+command /gamemode creative [<Player>]:
+  permission: {@permprefix}.creative
+  permission message: {@permmsg}
+  aliases: /gmc, /gm c, /gm 1, /gamemode 1
+  executable by: players and console
+  trigger:
+    if arg 1 isn't specified:
+      set player's gamemode to creative
+      send "{@prefix} Set gamemode &ccreative &6for %player%" to player
+      send "{@prefix} Your gamemode was changed to &ccreative" to player
+      stop
+    if arg 1 is specified:
+      if arg 1 is online:
+        set arg 1's gamemode to creative
+        send "{@prefix} Set gamemode &ccreative &6for %arg 1%" to player
+        send "{@prefix} Your gamemode was changed to &ccreative" to arg 1
+      else:
+        send "{@notonline}" to player
+command /gamemode survival [<Player>]:
+  permission: {@permprefix}.survival
+  permission message: {@permmsg}
+  aliases: /gms, /gm s, /gm 0, /gamemode 0
+  executable by: players and console
+  trigger:
+    if arg 1 isn't specified:
+      set player's gamemode to survival
+      send "{@prefix} Set gamemode &csurvival &6for %player%" to player
+      send "{@prefix} Your gamemode was changed to &csurvival" to player
+      stop
+    if arg 1 is specified:
+      if arg 1 is online:
+        set arg 1's gamemode to survival
+        send "{@prefix} Set gamemode &csurvival &6for %arg 1%" to player
+        send "{@prefix} Your gamemode was changed to &csurvival" to arg 1
+      else:
+        send "{@notonline}" to player
+command /gamemode adventure [<Player>]:
+  permission: {@permprefix}.adventure
+  permission message: {@permmsg}
+  aliases: /gma, /gm a, /gm 2, /gamemode 2
+  executable by: players and console
+  trigger:
+    if arg 1 isn't specified:
+      set player's gamemode to adventure
+      send "{@prefix} Set gamemode &cadventure &6for %player%" to player
+      send "{@prefix} Your gamemode was changed to &cadventure" to player
+      stop
+    if arg 1 is specified:
+      if arg 1 is online:
+        set arg 1's gamemode to adventure
+        send "{@prefix} Set gamemode &cadventure &6for %arg 1%" to player
+        send "{@prefix} Your gamemode was changed to &cadventure" to arg 1
+      else:
+        send "{@notonline}" to player
+command /gamemode spectator [<Player>]:
+  permission: {@permprefix}.spectator
+  permission message: {@permmsg}
+  aliases: /gmsp, /gm sp, /gm 3, /gamemode 3
+  executable by: players and console
+  trigger:
+    if arg 1 isn't specified:
+      set player's gamemode to spectator
+      send "{@prefix} Set gamemode &cspectator &6for %player%" to player
+      send "{@prefix} Your gamemode was changed to &cspectator" to player
+      stop
+    if arg 1 is specified:
+      if arg 1 is online:
+        set arg 1's gamemode to spectator
+        send "{@prefix} Set gamemode &cspectator &6for %arg 1%" to player
+        send "{@prefix} Your gamemode was changed to &cspectator" to arg 1
+      else:
+        send "{@notonline}" to player
 #/give
 #/god
 #/hat
