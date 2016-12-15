@@ -11,6 +11,7 @@ options:
 command /break:
   permission: {@permprefix}.break
   permission message: {@permmsg}
+  Description: Remove the block you are looking at!
   trigger:
     set target-block to air
     send "{@prefix} Block was removed" to player
@@ -22,6 +23,7 @@ command /feed [<Player>]:
   permission: {permprefix}.feed
   permission message: {@permmsg}
   aliases: /eat
+  description: &6Fill your hunger bar!
   executable by: players 
   trigger:
     if arg 1 isn't specified:
@@ -131,3 +133,32 @@ command /gamemode spectator [<Player>]:
 #/tree
 #/unlimited
 #/workbench
+command /setspawn:
+  permission: {@permprefix}.setspawn
+  permission message: {@permmsg}
+  executable by: players
+  trigger:
+    set {vessentials::spawn} to player's location
+    send "{@prefix} Spawn location set!"
+    stop
+command /spawn [<Player>]:
+  permission: {@permprefix}.spawn
+  permission message: {@permmsg}
+  executable by: players and console
+  trigger:
+    if arg 1 isn't specified:
+      teleport player to {vessentials::spawn}
+      send "{@prefix} Teleporting you to spawn!" to player
+      stop
+    if arg 1 is specified:
+      player has permission "{@permprefix}.spawn.others}:
+        if arg 1 is online:
+          teleport arg 1 to {vessentials::spawn}
+          send "{@prefix} %player% teleported you to spawn" to arg 1
+          send "{@prefix} Teleport %arg 1% to spawn" to player
+          stop
+        if arg 1 isn't online:
+          send "{@notonline}" to player
+          stop
+      else:
+        send "{@permmsg}" to player
