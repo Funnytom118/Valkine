@@ -1,2 +1,30 @@
 http://wiki.ess3.net/wiki/Command_Reference for alphabetical ordering of commands which are currently in Essentials.
-
+#/bigtree
+command /break
+  permission: vessentials.break
+  permission message: &cYou don't have access to this command
+  trigger:
+    set target-block to air
+    send "{@prefix} Block was removed" to player
+#/condense
+#/enchant
+#/exp
+#/feed
+#/firework
+#/fly
+#/gamemode
+#/give
+#/god
+#/hat
+#/heal
+#/item
+#/kit
+#/more
+#/ptime
+#/repair
+#/skull
+#/speed
+#/time
+#/tree
+#/unlimited
+#/workbench
