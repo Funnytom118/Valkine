@@ -38,7 +38,7 @@ command /exp [<text>] [<text>] [<Player>]:
         if arg 2 is set:
           if arg 2 is a number:
             if arg 3 is set:
-              if arg 3 is online:
+               if arg 3 is online:
                 increase the level of arg 3 by arg 2
                 stop
               if arg 3 isn't online:
