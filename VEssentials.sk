@@ -27,7 +27,7 @@ command /break:
     stop
 #/condense
 #/enchant
-command /exp [<text>] [<text>] [<Player>]:
+command /exp [<text>] [<integer>] [<Player>]:
   permission: {@permprefix}.exp
   permission message: {@permmsg}
   aliases: /xp, /experience
@@ -107,7 +107,7 @@ command /feed [<Player>]:
     if arg 1 isn't set:
       set {_waited} to difference between {feed.%player%.lastused} and now
       if {_waited} is less than a minute:
-        send: "{@prefix} You have to wait another %{_waited}% seconds to execute this command" to player
+        send "{@prefix} You have to wait another %{_waited}% seconds to execute this command" to player
         stop
       if {_waited} is more than a minute:
         set the player's food level to 10
@@ -346,7 +346,7 @@ command /speed [<text>] [<integer>] [<Player>]:
               send "{@prefix} Flying speed changed to %arg 2%" to player
               stop
             else:
-              send: "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
+              send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
           else:
             send "{@prefix} /speed <walking|flying> <speed> [player]" to player
         if arg 1 is "walking":
@@ -356,7 +356,7 @@ command /speed [<text>] [<integer>] [<Player>]:
               send "{@prefix} Walking speed changed to %arg 2%" to player
               stop
             else:
-              send: "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
+              send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
           else:
             send "{@prefix} /speed <walking|flying> <speed> [player]" to player
         else:
@@ -369,7 +369,7 @@ command /speed [<text>] [<integer>] [<Player>]:
           if arg 1 is set:
             if arg 1 is "flying":
               if arg 2 is set:
-                if arg 2 is a number equal or greater than -1 and equal or smaller than 1:
+                if arg 2 is between -1 and 1:
                   set arg 3's flying speed to arg 2
                   send "{@prefix} Flying speed changed to %arg 2% for %arg 3%" to player
                   send "{@prefix} Your flying speed was changed to %arg 2%" to arg 3
@@ -450,7 +450,7 @@ command /spawn [<Player>]:
       send "{@prefix} Teleporting you to spawn!" to player
       stop
     if arg 1 is set:
-      player has permission "{@permprefix}.spawn.others}:
+      player has permission "{@permprefix}.spawn.others":
         if arg 1 is online:
           teleport arg 1 to {vessentials::spawn}
           send "{@prefix} %player% teleported you to spawn" to arg 1
