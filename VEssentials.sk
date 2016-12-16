@@ -1,12 +1,82 @@
+#List of permissions:
+#   vessentials.break
+#   vessentials.exp
+#   vessentials.exp.others
+#   vessentials.feed
+#   vessentials.gamemode.survival
+#   vessentials.gamemode.creative
+#   vessentials.gamemode.adventure
+#   vessentials.gamemode.spectator
+#   vessentials.skull
+#   vessentials.speed
+#   vessentials.speed.others
+#   vessentials.tree
+#   vessentials.setspawn
+#   vessentials.spawn
+#   vessentials.pay
+#   vessentials.balance
+#   vessentials.eco
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
+#   vessentials
 options:
-  prefix: &8[&9&lVEssentials&8] &6
+  #The thingy going in front of all most of the messages from the plugin. If possible, specify a color code afterwards.
+  prefix: &8[&9&lVEssentials&8]&6
+  #The word going in front of the permissions. Per default it is vessentials.
   permprefix: vessentials
+  #The error message that will display if a player doesn't have permission 
   permmsg: &cYou don't have access to this command
+  #The error message displayed when a player isn't online
   notonline: &4Error: &cThe specified player isn't online
+  #The error message displayed when a player isn't specified
   specify: &4Error: &cPlease specify a player.
+  #The starting balance of your players. Only add numbers here. Lowest is 0.
+  startbal: 100
   
 #http://wiki.ess3.net/wiki/Command_Reference for alphabetical ordering of commands which are currently in Essentials.
 
+on first join:
+  set {vessentials::balance::%player's uuid%} to {@startbal}
 #/bigtree
 command /break:
   permission: {@permprefix}.break
@@ -116,7 +186,7 @@ command /feed [<Player>]:
 #/firework
 #/fly
 command /gamemode creative [<Player>]:
-  permission: {@permprefix}.creative
+  permission: {@permprefix}.gamemode.creative
   permission message: {@permmsg}
   aliases: /gmc, /gm c, /gm 1, /gamemode 1
   executable by: players and console
@@ -134,7 +204,7 @@ command /gamemode creative [<Player>]:
       else:
         send "{@notonline}" to player
 command /gamemode survival [<Player>]:
-  permission: {@permprefix}.survival
+  permission: {@permprefix}.gaemode.survival
   permission message: {@permmsg}
   aliases: /gms, /gm s, /gm 0, /gamemode 0
   executable by: players and console
@@ -152,7 +222,7 @@ command /gamemode survival [<Player>]:
       else:
         send "{@notonline}" to player
 command /gamemode adventure [<Player>]:
-  permission: {@permprefix}.adventure
+  permission: {@permprefix}.gamemode.adventure
   permission message: {@permmsg}
   aliases: /gma, /gm a, /gm 2, /gamemode 2
   executable by: players and console
@@ -170,7 +240,7 @@ command /gamemode adventure [<Player>]:
       else:
         send "{@notonline}" to player
 command /gamemode spectator [<Player>]:
-  permission: {@permprefix}.spectator
+  permission: {@permprefix}.gamemode.spectator
   permission message: {@permmsg}
   aliases: /gmsp, /gm sp, /gm 3, /gamemode 3
   executable by: players and console
@@ -335,3 +405,57 @@ command /spawn [<Player>]:
           stop
       else:
         send "{@permmsg}" to player
+command /balance [<offlinePlayer>]:
+  permission: {@permprefix}.balance
+  permission message: {@permmsg}
+  aliases: /money, /bal
+  trigger:
+    if arg 1 is set:
+      send "{@prefix} &aBalance of %arg 1%&a: &c$%{vessentials::balance::%arg 1's uuid%}%" to player
+    if arg 1 isn't set:
+      send "{@prefix} &aBalance: &c$%{vessentials::balance::%player's uuid%}%" to player
+command /eco [<text>] [<Player>] [<integer>]:
+  permission: {@permprefix}.eco
+  permission message: {@permmsg}
+  aliases: /economy
+  trigger:
+    if arg 3 is greater than 0:
+      if arg 2 is set:
+        if arg 1 is "set":
+          set {vessenitals::balance::%arg 2's uuid%} to arg 3
+          send "{@prefix} &aSet %arg 2%'s balance to %arg 3%" to player
+          send "{@prefix} &a%player% &cset your balance to &c$%arg 3%" to arg 2
+        if arg 1 is "take":
+          remove arg 3 from {vessentials::balance::%arg 2's uuid%}
+          send "{@prefix} &aRemoved &c$%arg 3% &afrom player's balance. New balance: &c$%{vessentials::balance::%arg 2's uuid%}%" to player
+          send "{@prefix} &a%player% took &c$%arg 3% &afrom your balance. New balance: &c$%{vessentials::balance::%arg 2's uuid%}%" to arg 2
+          stop
+        if arg 1 is "give":
+          add arg 3 to {vessentials::balance::%arg 2's uuid%}
+          send "{@prefix} &aAdded &c$%arg 3% &afrom player's balance. New balance: &c$%{vessentials::balance::%arg 2's uuid%}%" to player
+          send "{@prefix} &a%player% added &c$%arg 3% &ato your balance. New balance: &c$%{vessentials::balance::%arg 2's uuid%}%" to arg 2
+          stop
+        if arg 1 is "reset":
+          set {vessentials::balance::%arg 2's uuid%} to {@startbal}
+          send "{@prefix} &aSet the balance of %arg 2% to &c$%{@startbal}%" to player
+          send "{@prefix} &a%player% reset your balance. New balance: &c$%{vessentials::balance::%arg 2's uuid%}%" to arg 2
+        else:
+          send "{@prefix} /eco <take|give|reset|set> <player> <amount>" to player
+      else:
+        send "{@specify}" to player
+    else:
+      send "{@prefix} Please specify a balance
+command /pay [<Player>] [<integer>]:
+  permission: {@permprefix}.pay
+  permission message: {@permmsg}
+  trigger:
+    if arg 1 is online:
+      if arg 2 is greater or equal to 0.001:
+        remove arg 2 from {vessentials::balance::%player's uuid%}%
+        add arg 2 to {vessentials::balance::%arg 1's uuid%}%
+        send "{@prefix} &c%arg 2% &awas sent to &c%arg 1%" to player
+        send "{@prefix} &aYou have recieved %arg 2% from %player%" to arg 1
+      else:
+        send "{@prefix} Please specify an amount to send" to player
+    else:
+      send "{@notonline}" to player
