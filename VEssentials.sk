@@ -1,5 +1,5 @@
 options:
-  prefix:
+  prefix: &8[&9&lVEssentials&8] &6
   permprefix: vessentials
   permmsg: &cYou don't have access to this command
   notonline: &4Error: &cThe specified player isn't online
@@ -18,7 +18,76 @@ command /break:
     stop
 #/condense
 #/enchant
-#/exp
+command /exp [<text>] [<text>] [<Player>]:
+  permission: {@permprefix}.exp
+  permission message: {@permmsg}
+  aliases: /xp, /experience
+  description: Change the experience of a player
+  trigger:
+    if arg 1 is specified:
+      if arg 1 is "add":
+        if arg 2 is set:
+          if arg 2 is a number:
+            if arg 3 is set:
+              if arg 3 is online:
+                increase the level of arg 3 by arg 2
+                stop
+              if arg 3 isn't online:
+                send "{@notonline}" to player
+                stop
+            if arg 3 isn't set:
+              send "{@prefix} /exp <add|remove|set> <levels> <player>" to player
+              stop
+          else:
+            send "{@prefix} /exp <add|remove|set> <levels> <player>" to player
+            stop
+        if arg 2 isn't set:
+          send "{@prefix} /exp <add|remove|set> <levels> <player>" to player
+          stop
+      if arg 1 is "remove":
+        if arg 2 is set:
+          if arg 2 is a number:
+            if arg 3 is set:
+              if arg 3 is online:
+                reduce the level of arg 3 by arg 2
+                stop
+              if arg 3 isn't online:
+                send "{@notonline}" to player
+                stop
+            if arg 3 isn't set:
+              send "{@prefix} /exp <add|remove|set> <levels> <player>" to player
+              stop
+          else:
+            send "{@prefix} /exp <add|remove|set> <levels> <player>" to player
+            stop
+        if arg 2 isn't set:
+          send "{@prefix} /exp <add|remove|set> <levels> <player>" to player
+          stop
+      if arg 1 is "set":
+        if arg 2 is set:
+          if arg 2 is a number:
+            if arg 3 is set:
+              if arg 3 is online:
+                set the level of arg 3 to arg 2
+                stop
+              if arg 3 isn't online:
+                send "{@notonline}" to player
+                stop
+            if arg 3 isn't set:
+              send "{@prefix} /exp <add|remove|set> <levels> <player>" to player
+              stop
+          else:
+            send "{@prefix} /exp <add|remove|set> <levels> <player>" to player
+            stop
+        if arg 2 isn't set:
+          send "{@prefix} /exp <add|remove|set> <levels> <player>" to player
+          stop
+      else:
+        send "{@prefix} /exp <add|remove|set> <levels> <player>" to player
+        stop
+    if arg 1 isn't set:
+      send "{@prefix} /exp <add|remove|set> <levels> <player>" to player
+      stop
 command /feed [<Player>]:
   permission: {permprefix}.feed
   permission message: {@permmsg}
@@ -127,10 +196,114 @@ command /gamemode spectator [<Player>]:
 #/more
 #/ptime
 #/repair
-#/skull
-#/speed
+command /skull [<offlinePlayer>]:
+  permission: {@permprefix}.skull
+  permission message: {@permmsg}
+  description: Get the skull of a player
+  executable by: players
+  aliases: /head, /face
+  trigger:
+    give player the skull of argument
+    send "{@prefix} Added the skull of %arg% to your inventory" to player
+    stop
+command /speed [<text>] [<integer>] [<Player>]:
+  permission: {@permprefix.speed}
+  permission message: {@permmsg}
+  executable by: players
+  trigger:
+    if arg 3 isn't set:
+      if arg 1 is set:
+        if arg 1 is "flying":
+          if arg 2 is set:
+            if arg 2 is a number equal or greater than -1 and equal or smaller than 1:
+              set player's flying speed to arg 2
+              send "{@prefix} Flying speed changed to %arg 2%" to player
+              stop
+            else:
+              send: "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
+          else:
+            send "{@prefix} /speed <walking|flying> <speed> [player]" to player
+        if arg 1 is "walking":
+          if arg 2 is set:
+            if arg 2 is a number equal or greater than -1 and equal or smaller than 1:
+              set player's walking speed to arg 2
+              send "{@prefix} Walking speed changed to %arg 2%" to player
+              stop
+            else:
+              send: "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
+          else:
+            send "{@prefix} /speed <walking|flying> <speed> [player]" to player
+        else:
+          send "{@prefix} /speed <walking|flying> <speed> [player]" to player
+      else:
+        send "{@prefix} /speed <walking|flying> <speed> [player]" to player
+    if arg 3 is set:
+      player has permission "{@permprefix}.speed.others":
+        if arg 3 is online:
+          if arg 1 is set:
+            if arg 1 is "flying":
+              if arg 2 is set:
+                if arg 2 is a number equal or greater than -1 and equal or smaller than 1:
+                  set arg 3's flying speed to arg 2
+                  send "{@prefix} Flying speed changed to %arg 2% for %arg 3%" to player
+                  send "{@prefix} Your flying speed was changed to %arg 2%" to arg 3
+                  stop
+                else:
+                  send: "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
+              else:
+                send "{@prefix} /speed <walking|flying> <speed> [player]" to player
+            if arg 1 is "walking":
+              if arg 2 is set:
+                if arg 2 is a number equal or greater than -1 and equal or smaller than 1:
+                  set arg 3's walking speed to arg 2
+                  send "{@prefix} Walking speed changed to %arg 2% for %arg 3%" to player
+                  send "{@prefix} Your walking speed was changed to %arg 2%" to arg 3
+                  stop
+                else:
+                  send: "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
+              else:
+                send "{@prefix} /speed <walking|flying> <speed> [player]" to player
+            else:
+              send "{@prefix} /speed <walking|flying> <speed> [player]" to player
+          else:
+            send "{@prefix} /speed <walking|flying> <speed> [player]" to player
+        if arg 3 isn't online:
+          send "{@notonline}
 #/time
-#/tree
+command: /tree [<text>]:
+  permission: {@permprefix}.tree
+  permission message: {@permmsg}
+  executable by: players
+  trigger:
+    if arg is set:
+      if arg is "oak":
+        grow an oak tree at target-block
+        send "{@prefix} Tree grown succesfully" to player
+        stop
+      if arg is "spruce":
+        grow a spruce tree at target-block
+        send "{@prefix} Tree grown succesfully" to player
+        stop
+      if arg is "birch":
+        grow a birch tree at target-block
+        send "{@prefix} Tree grown succesfully" to player
+        stop
+      if arg is "jungle":
+        grow a jungle tree at target-block
+        send "{@prefix} Tree grown succesfully" to player
+        stop
+      if arg is "darkoak":
+        grow a dark oak tree at target-block
+        send "{@prefix} Tree grown succesfully" to player
+        stop
+      if arg is "acacia":
+        grow an acacia tree at target-block
+        send "{@prefix} Tree grown succesfully" to player
+        stop
+      else:
+        send "{@prefix} /tree <oak|spruce|birch|jungle|darkoak|acacia>" to player
+    if arg isn't set:
+      send "{@prefix} /tree <oak|spruce|birch|jungle|darkoak|acacia>" to player
 #/unlimited
 #/workbench
 command /setspawn:
