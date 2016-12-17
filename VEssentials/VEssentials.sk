@@ -38,15 +38,43 @@ options:
 
 on first join:
   set {vessentials::balance::%player's uuid%} to {@startbal}
+on damage:
+  if {vessentials::god::%player's uuid%} is true:
+    cancel event
 
-#/bigtree
+command /bigtree [<text>]:
+	aliases: /largetree
+	trigger:
+		if the targeted block is not grass or dirt:
+			message "{@prefix}Trees can only be grown on grass and dirt."
+			stop
+		if arg 1 is not set:
+			grow tree of type large regular tree above the targeted block
+			message "{@prefix}A tree has been grown above the block you are looking at."
+			stop
+		if arg 1 is set:
+			if arg 1 is "oak":
+				grow tree of type large regular tree above the targeted block
+				message "{@prefix}An oak tree has been grown above the block you are looking at."
+				stop
+			if arg 1 is "spruce":
+				grow tree of type tall redwood above the targeted block
+				message "{@prefix}A spruce tree has been grown above the block you are looking at."
+				stop
+			if arg 1 is "jungle":
+				grow tree of type tall jungle tree above the targeted block
+				message "{@prefix}A jungle tree has been grown above the block you are looking at."
+				stop
+			else:
+				send "{@prefix}%arg 1% is not a tree type. The only tree types are oak, spruce, and jungle."
+				stop
 command /break:
   permission: {@permprefix}.break
   permission message: {@permmsg}
   aliases: /vessentials:break
   Description: Remove the block you are looking at!
   trigger:
-    set target-block to air
+    set targeted block to air
     send "{@prefix} Block was removed" to player
     stop
 #/condense
@@ -191,73 +219,73 @@ command /gamemode [<text>] [<Player>]:
             if arg 1 is "survival":
               if player has permission "{@permprefix}.survival.others":
                 set arg 2's gamemode to survival
-                send "{@prefix} Set gamemode &csurvival &6for %player%" to player
+                send "{@prefix} Set gamemode &csurvival &6for %arg 2%" to player
                 send "{@prefix} Your gamemode was changed to &csurvival" to arg 2
                 stop
             if arg 1 is "s":
               if player has permission "{@permprefix}.survival.others":
                 set arg 2's gamemode to survival
-                send "{@prefix} Set gamemode &csurvival &6for %player%" to player
+                send "{@prefix} Set gamemode &csurvival &6for %arg 2%" to player
                 send "{@prefix} Your gamemode was changed to &csurvival" to arg 2
                 stop
             if arg 1 is "0":
               if player has permission "{@permprefix}.survival.others":
                 set arg 2's gamemode to survival
-                send "{@prefix} Set gamemode &csurvival &6for %player%" to player
+                send "{@prefix} Set gamemode &csurvival &6for %arg 2%" to player
                 send "{@prefix} Your gamemode was changed to &csurvival" to arg 2
                 stop
             if arg 1 is "creative":
               if player has permission "{@permprefix}.creative.others":
                 set arg 2's gamemode to creative
-                send "{@prefix} Set gamemode &ccreative &6for %player%" to player
+                send "{@prefix} Set gamemode &ccreative &6for %arg 2%" to player
                 send "{@prefix} Your gamemode was changed to &ccreative" to arg 2
                 stop
             if arg 1 is "1":
               if player has permission "{@permprefix}.creative.others":
                 set arg 2's gamemode to creative
-                send "{@prefix} Set gamemode &ccreative &6for %player%" to player
+                send "{@prefix} Set gamemode &ccreative &6for %arg 2%" to player
                 send "{@prefix} Your gamemode was changed to &ccreative" to arg 2
                 stop
             if arg 1 is "c":
               if player has permission "{@permprefix}.creative.others":
                 set arg 2's gamemode to creative
-                send "{@prefix} Set gamemode &ccreative &6for %player%" to player
+                send "{@prefix} Set gamemode &ccreative &6for %arg 2%" to player
                 send "{@prefix} Your gamemode was changed to &ccreative" to arg 2
                 stop
             if arg 1 is "adventure":
               if player has permission "{@permprefix}.adventure.others":
                 set arg 2's gamemode to adventure
-                send "{@prefix} Set gamemode &cadventure &6for %player%" to player
+                send "{@prefix} Set gamemode &cadventure &6for %arg 2%" to player
                 send "{@prefix} Your gamemode was changed to &cadventure" to arg 2
                 stop
             if arg 1 is "a":
               if player has permission "{@permprefix}.adventure.others":
                 set arg 2's gamemode to adventure
-                send "{@prefix} Set gamemode &cadventure &6for %player%" to player
+                send "{@prefix} Set gamemode &cadventure &6for %arg 2%" to player
                 send "{@prefix} Your gamemode was changed to &cadventure" to arg 2
                 stop
             if arg 1 is "2":
               if player has permission "{@permprefix}.adventure.others":
                 set arg 2's gamemode to adventure
-                send "{@prefix} Set gamemode &cadventure &6for %player%" to player
+                send "{@prefix} Set gamemode &cadventure &6for %arg 2%" to player
                 send "{@prefix} Your gamemode was changed to &cadventure" to arg 2
                 stop
             if arg 1 is "spectator":
               if player has permission "{@permprefix}.spectator.others":
                 set arg 2's gamemode to spectator
-                send "{@prefix} Set gamemode &cspectator &6for %player%" to player
+                send "{@prefix} Set gamemode &cspectator &6for %arg 2%" to player
                 send "{@prefix} Your gamemode was changed to &cspectator" to arg 2
                 stop
             if arg 1 is "3":
               if player has permission "{@permprefix}.spectator.others":
                 set arg 2's gamemode to spectator
-                send "{@prefix} Set gamemode &cspectator &6for %player%" to player
+                send "{@prefix} Set gamemode &cspectator &6for %arg 2%" to player
                 send "{@prefix} Your gamemode was changed to &cspectator" to arg 2
                 stop
             if arg 1 is "sp":
               if player has permission "{@permprefix}.spectator.others":
                 set arg 2's gamemode to spectator
-                send "{@prefix} Set gamemode &cspectator &6for %player%" to player
+                send "{@prefix} Set gamemode &cspectator &6for %arg 2%" to player
                 send "{@prefix} Your gamemode was changed to &cspectator" to arg 2
                 stop
             else:
@@ -393,9 +421,57 @@ command /gamemode [<text>] [<Player>]:
     if arg 1 isn't set:
       send "{@prefix} /gamemode <survival|s|0|creative|c|1|adventure|a|2|spectator|sp|3> [player]" to player
 #/give
-#/god
+command /god [<Player>]:
+  permission: {@permprefix}.god
+  permission message: {@permmsg}
+  aliases: /vessentials:god
+  trigger:
+    if arg 1 is set:
+      if player has permission "{@permprefix}.god.others":
+        if {vessentials::god::%arg 1's uuid%} is false:
+          set {vessentials::god::%arg 1's uuid%} to true
+          send "{@prefix} God mode enabled for %arg 1%" to player
+          send "{@prefix} God mode enabled" to arg 1
+        if {vessentials::god::%arg 1's uuid%} is true:
+          set {vessentials::god::%arg 1's uuid%} to false
+          send "{@prefix} God mode disabled for %arg 1%" to player
+          send "{@prefix} God mode disabled" to arg 1
+      else:
+        send "{@permmsg}" to player
+    if arg 1 isn't set:
+      if {vessentials::god::%arg 1's uuid%} is false:
+        set {vessentials::god::%arg 1's uuid%} to true
+        send "{@prefix} God mode enabled" to player
+      if {vessentials::god::%arg 1's uuid%} is true:
+        set {vessentials::god::%arg 1's uuid%} to false
+        send "{@prefix} God mode disabled" to player
 #/hat
-#/heal
+command /heal [<Player>]:
+  permission: {permprefix}.heal
+  permission message: {@permmsg}
+  aliases: /vessentials:heal
+  executable by: players 
+  trigger:
+    if arg 1 isn't set:
+      set {_waited} to difference between {vessentials.heal.%player%.lastused} and now
+      if {_waited} is less than {@healcd}:
+        send "{@prefix} You have to wait another %{_waited}% seconds to execute this command" to player
+        stop
+      if {_waited} is more than {@healcd}:
+        heal the player by 10 hearts
+        set {vessentials.heal.%player%.lastused} to now
+        send "{@prefix} Youhave been healed" to player
+        stop
+    if arg 1 is set:
+      if arg 1 is online:
+        player has permission "{@permprefix}.heal.others":
+          heal arg 1 by 10 hearts
+          send "{@prefix} You have been healed" to player
+          stop
+        else:
+          send "{@permmsg}" to player
+      else:
+        send "{@notonline}" to player
 #/item
 #/kit
 #/more
@@ -421,26 +497,20 @@ command /speed [<text>] [<text>] [<Player>]:
       if arg 1 is set:
         if arg 1 is "flying":
           if arg 2 is set:
-            if arg 2 is a number between -1 and 1:
+            if arg 2 is between -1 and 1:
               set player's flying speed to arg 2
               send "{@prefix} Flying speed changed to %arg 2%" to player
               stop
-            if arg 2 is "reset":
-              set player's flying speed to 0.2
-              send "{@prefix} Your flying speed has been changed to the default" to player
             else:
               send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
           else:
             send "{@prefix} /speed <walking|flying> <speed> [player]" to player
         if arg 1 is "walking":
           if arg 2 is set:
-            if arg 2 is a number between -1 and 1:
+            if arg 2 is between -1 and 1:
               set player's walking speed to arg 2
               send "{@prefix} Walking speed changed to %arg 2%" to player
               stop
-            if arg 2 is "reset":
-              set player's walking speed to 0.1
-              send "{@prefix} Your walking speed has been changed to the default" to player
             else:
               send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
           else:
@@ -455,28 +525,22 @@ command /speed [<text>] [<text>] [<Player>]:
           if arg 1 is set:
             if arg 1 is "flying":
               if arg 2 is set:
-                if arg 2 is a number between -1 and 1:
+                if arg 2 is between -1 and 1:
                   set arg 3's flying speed to arg 2
                   send "{@prefix} Flying speed changed to %arg 2% for %arg 3%" to player
                   send "{@prefix} Your flying speed was changed to %arg 2%" to arg 3
                   stop
-                if arg 2 is "reset":
-                  set player's flying speed to 0.2
-                  send "{@prefix} Your flying speed has been changed to the default" to player
                 else:
                   send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
               else:
                 send "{@prefix} /speed <walking|flying> <speed> [player]" to player
             if arg 1 is "walking":
               if arg 2 is set:
-                if arg 2 is a number between -1 and 1:
+                if arg 2 is between -1 and 1:
                   set arg 3's walking speed to arg 2
                   send "{@prefix} Walking speed changed to %arg 2% for %arg 3%" to player
                   send "{@prefix} Your walking speed was changed to %arg 2%" to arg 3
                   stop
-                if arg 2 is "reset":
-                  set player's walking speed to 0.1
-                  send "{@prefix} Your walking speed has been changed to the default" to player
                 else:
                   send: "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
               else:
@@ -487,42 +551,34 @@ command /speed [<text>] [<text>] [<Player>]:
             send "{@prefix} /speed <walking|flying> <speed> [player]" to player
         if arg 3 isn't online:
           send "{@notonline}" to player
-#/time
 command /tree [<text>]:
   permission: {@permprefix}.tree
   permission message: {@permmsg}
-  executable by: players
   aliases: /vessentials:tree
-  trigger:
-    if arg is set:
-      if arg is "oak":
-        grow an oak tree at target-block
-        send "{@prefix} Tree grown succesfully" to player
-        stop
-      if arg is "spruce":
-        grow a spruce tree at target-block
-        send "{@prefix} Tree grown succesfully" to player
-        stop
-      if arg is "birch":
-        grow a birch tree at target-block
-        send "{@prefix} Tree grown succesfully" to player
-        stop
-      if arg is "jungle":
-        grow a jungle tree at target-block
-        send "{@prefix} Tree grown succesfully" to player
-        stop
-      if arg is "darkoak":
-        grow a dark oak tree at target-block
-        send "{@prefix} Tree grown succesfully" to player
-        stop
-      if arg is "acacia":
-        grow an acacia tree at target-block
-        send "{@prefix} Tree grown succesfully" to player
-        stop
-      else:
-        send "{@prefix} /tree <oak|spruce|birch|jungle|darkoak|acacia>" to player
-    if arg isn't set:
-      send "{@prefix} /tree <oak|spruce|birch|jungle|darkoak|acacia>" to player
+	trigger:
+		if the targeted block is not grass or dirt:
+			message "{@prefix}Trees can only be grown on grass and dirt."
+			stop
+		if arg 1 is not set:
+			grow tree of type any tree above the targeted block
+			message "{@prefix}A tree has been grown above the block you are looking at."
+			stop
+		if arg 1 is set:
+			if arg 1 is "oak":
+				grow tree of type any regular tree above the targeted block
+				message "{@prefix}An oak tree has been grown above the block you are looking at."
+				stop
+			if arg 1 is "spruce":
+				grow tree of type any redwood above the targeted block
+				message "{@prefix}A spruce tree has been grown above the block you are looking at."
+				stop
+			if arg 1 is "jungle":
+				grow tree of type any jungle tree above the targeted block
+				message "{@prefix}A jungle tree has been grown above the block you are looking at."
+				stop
+			else:
+				send "{@prefix}%arg 1% is not a tree type. The only tree types are oak, spruce, and jungle."
+				stop
 #/unlimited
 #/workbench
 command /setspawn:
