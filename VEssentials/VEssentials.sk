@@ -21,6 +21,7 @@ options:
   notonline: &4Error: &cThe set player isn't online                       #The error message displayed when a player isn't online
   specify: &4Error: &cPlease specify a player.                            #The error message displayed when a player isn't set
   startbal: 100                                                           #The starting balance of your players. Only add numbers here. Lowest is 0.
+  feedcd: a minute                                                        #The cooldown between using /feed. Make a prefix [like a or 2] and then use minutes/hours/seconds/days. Use singular if it is only one (timeframe)
   basecolor1: &b					                                           			#The main color of all messages (Must include the & code)
   basecolor2: &9 				  			                                         	#The secondary color of all messages (Must include the & code)
   basecolor3: &8 								                                          #The 'arrow' color of all messages (Must include the & code)
@@ -32,12 +33,17 @@ options:
 # 	   		 DO NOT edit anything under this line, or you will break the code.			          		#
 #																								#
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ 
+#http://wiki.ess3.net/wiki/Command_Reference for alphabetical ordering of commands which are currently in Essentials.
+
 on first join:
   set {vessentials::balance::%player's uuid%} to {@startbal}
+
 #/bigtree
 command /break:
   permission: {@permprefix}.break
   permission message: {@permmsg}
+  aliases: /vessentials:break
   Description: Remove the block you are looking at!
   trigger:
     set target-block to air
@@ -48,7 +54,7 @@ command /break:
 command /exp [<text>] [<integer>] [<Player>]:
   permission: {@permprefix}.exp
   permission message: {@permmsg}
-  aliases: /xp, /experience
+  aliases: /xp, /experience, /vessentials:exp, /vessentials:xp, /vessentials:experience
   description: Change the experience of a player
   trigger:
     if arg 1 is set:
@@ -118,23 +124,25 @@ command /exp [<text>] [<integer>] [<Player>]:
 command /feed [<Player>]:
   permission: {permprefix}.feed
   permission message: {@permmsg}
-  aliases: /eat
+  aliases: /eat, /vessentials:feed, /vessentials:eat
   description: &6Fill your hunger bar!
   executable by: players 
   trigger:
     if arg 1 isn't set:
       set {_waited} to difference between {feed.%player%.lastused} and now
-      if {_waited} is less than a minute:
+      if {_waited} is less than {@feedcd}:
         send "{@prefix} You have to wait another %{_waited}% seconds to execute this command" to player
         stop
-      if {_waited} is more than a minute:
+      if {_waited} is more than {@feedcd}:
         set the player's food level to 10
         set {feed.%player%.lastused} to now
+        send "{@prefix} Your hunger was sated" to player
         stop
     if arg 1 is set:
       if arg 1 is online:
         player has permission "{@permprefix}.feed.others":
           set arg 1's food level to 10
+          send "{@prefix} Your hunger was sated" to player
           stop
         else:
           send "{@permmsg}" to player
@@ -144,28 +152,29 @@ command /feed [<Player>]:
 command /fly [<Player>]:
   permission: {@permprefix}.fly
   permission message: {permmsg}
+  aliases: /vessentials:fly
   trigger:
     if arg 1 isn't set:
       if {vessentials::fly::%player's uuid%} is 0:
-        set player's flight mode to true
+        set player's fly mode to true
         send "{@prefix} Flight mode enabled" to player
         set {vessentials::fly::%arg 1's uuid%} to 1
         stop
       if {vessentials::fly::%player's uuid%} is 1:
-        set player's flight mode to false
+        set player's fly mode to false
         send "{@prefix} Flight mode disabled" to player
         set {vessentials::fly::%player's uuid%} to 0
         stop
     if arg 1 is set:
       if player has permission "{@permprefix}.fly.others":
         if {vessentials::fly::%arg 1's uuid%} is 0:
-          set arg 1's flight mode to true
+          set arg 1's fly mode to true
           send "{@prefix} Flight mode enabled for %arg 1%" to player
           send "{@prefix} Flight mode enabled" to arg 1
           set {vessentials::fly::%arg 1's uuid%} to 1
           stop
         if {vessentials::fly::%arg 1's uuid%} is 1:
-          set arg 1's flight mode to false
+          set arg 1's fly mode to false
           send "{@prefix} Flight mode disabled for %arg 1%" to player
           send "{@prefix} Flight mode disabled" to arg 1
           set {vessentials::fly::%arg 1's uuid%} to 0
@@ -177,7 +186,7 @@ command /gamemode [<text>] [<Player>]:
   trigger:
     if arg 1 is set:
       if arg 2 is set:
-        if arg 2 isn't the player:
+        if arg 2 isn't the executor:
           if arg 2 is online:
             if arg 1 is "survival":
               if player has permission "{@permprefix}.survival.others":
@@ -255,7 +264,7 @@ command /gamemode [<text>] [<Player>]:
               send "{@prefix} /gamemode <survival|s|0|creative|c|1|adventure|a|2|spectator|sp|3> [player]" to player
           if arg 2 isn't online:
             send "{@notonline}" to player
-        if arg 2 is the player:
+        if arg 2 is executor:
           if arg 1 is "survival":
             if player has permission "{@permprefix}.survival":
               set arg 2's gamemode to survival
@@ -397,15 +406,16 @@ command /skull [<offlinePlayer>]:
   permission message: {@permmsg}
   description: Get the skull of a player
   executable by: players
-  aliases: /head, /face
+  aliases: /head, /face, /vessentials:skull, /vessentials:face, /vessentials:head
   trigger:
     give player the skull of argument
     send "{@prefix} Added the skull of %arg% to your inventory" to player
     stop
-command /speed [<text>] [<integer>] [<Player>]:
+command /speed [<text>] [<double>] [<Player>]:
   permission: {@permprefix}.speed
   permission message: {@permmsg}
   executable by: players
+  aliases: /vessentials:speed
   trigger:
     if arg 3 isn't set:
       if arg 1 is set:
@@ -470,6 +480,7 @@ command /tree [<text>]:
   permission: {@permprefix}.tree
   permission message: {@permmsg}
   executable by: players
+  aliases: /vessentials:tree
   trigger:
     if arg is set:
       if arg is "oak":
@@ -506,14 +517,17 @@ command /setspawn:
   permission: {@permprefix}.setspawn
   permission message: {@permmsg}
   executable by: players
+  aliases: /vessentials:setspawn
   trigger:
     set {vessentials::spawn} to player's location
     send "{@prefix} Spawn location set!"
+    set the spawnpoint of all worlds to player's location
     stop
 command /spawn [<Player>]:
   permission: {@permprefix}.spawn
   permission message: {@permmsg}
   executable by: players and console
+  aliases: /vessentials:spawn
   trigger:
     if arg 1 isn't set:
       teleport player to {vessentials::spawn}
@@ -534,7 +548,7 @@ command /spawn [<Player>]:
 command /balance [<offlinePlayer>]:
   permission: {@permprefix}.balance
   permission message: {@permmsg}
-  aliases: /money, /bal
+  aliases: /money, /bal, /vessentials:balance, /vessentials:money, /vessentials:bal
   trigger:
     if arg 1 is set:
       send "{@prefix} &aBalance of %arg 1%&a: &c$%{vessentials::balance::%arg 1's uuid%}%" to player
@@ -543,7 +557,7 @@ command /balance [<offlinePlayer>]:
 command /eco [<text>] [<Player>] [<integer>]:
   permission: {@permprefix}.eco
   permission message: {@permmsg}
-  aliases: /economy
+  aliases: /economy, /vessentials:eco, /vessentials:economy
   trigger:
     if arg 3 is greater than 0:
       if arg 2 is set:
@@ -574,11 +588,12 @@ command /eco [<text>] [<Player>] [<integer>]:
 command /pay [<Player>] [<integer>]:
   permission: {@permprefix}.pay
   permission message: {@permmsg}
+  aliases: /vessentials:pay
   trigger:
     if arg 1 is online:
       if arg 2 is greater or equal to 0.001:
-        remove arg-2 from {vessentials::balance::%player's uuid%}%
-        add arg-2 to {vessentials::balance::%arg 1's uuid%}%
+        remove arg-2 from {vessentials::balance::%player's uuid%}
+        add arg-2 to {vessentials::balance::%arg 1's uuid%}
         send "{@prefix} &c%arg 2% &awas sent to &c%arg 1%" to player
         send "{@prefix} &aYou have recieved %arg 2% from %player%" to arg 1
       else:
