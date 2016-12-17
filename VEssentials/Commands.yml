@@ -6,8 +6,12 @@
 /gamemode <survival|creative|adventure> [player] - Change your gamemode.
 /god [player] - Toggles god mode for you or a player
 /heal [player] - Heals the player
+/home [name] - Teleports you to or lists your homes
+/sethome [name] - Creates your home
+/delhome [name] - Deletes your home
 /skull <name> - Gives you the skull of the person
 /speed <walking|flying> <speed> [player] - Change your speed
+/time [time] - Change the time in your world
 /tree <oak|spruce|birch|jungle> - Spawn a tree where you're looking
 /setspawn - Set the spawn location
 /spawn [player] - Teleport you (or the player) to spawn
