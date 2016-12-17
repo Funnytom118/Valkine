@@ -600,3 +600,19 @@ command /pay [<Player>] [<integer>]:
         send "{@prefix} Please specify an amount to send" to player
     else:
       send "{@notonline}" to player
+command /killall [<text>]:
+  permission: {@permprefix}.killall
+  permission message: {@permmsg}
+  aliases: /vessentials:killall
+  trigger:
+    if arg 1 is set:
+      if arg 1 is "chicken":
+        loop all chickens:
+          kill all chickens in the player's world
+          send "Killed %loop% chickens" to player
+      if arg 1 is "pig":
+        kill all pigs in the player's world
+      if arg 1 is "rabbit":
+        kill all rabbits in the player's world
+      if arg 1 is "guardian":
+        kill all guardians in the player's world
