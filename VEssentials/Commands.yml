@@ -5,6 +5,7 @@
 /fly [player] - Toggles fly mode for you or another player.
 /gamemode <survival|creative|adventure> [player] - Change your gamemode.
 /god [player] - Toggles god mode for you or a player
+/heal [player] - Heals the player
 /skull <name> - Gives you the skull of the person
 /speed <walking|flying> <speed> [player] - Change your speed
 /tree <oak|spruce|birch|jungle> - Spawn a tree where you're looking
