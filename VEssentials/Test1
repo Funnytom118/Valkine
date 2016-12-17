@@ -1,0 +1,55 @@
+command /bigtree [<text>]:
+	aliases: /largetree
+	trigger:
+		if the targeted block is not grass or dirt:
+			message "{@prefix}Trees can only be grown on grass and dirt."
+			stop
+		if arg 1 is not set:
+			grow tree of type large regular tree above the targeted block
+			message "{@prefix}A tree has been grown above the block you are looking at."
+			stop
+		if arg 1 is set:
+			if arg 1 is "oak":
+				grow tree of type large regular tree above the targeted block
+				message "{@prefix}An oak tree has been grown above the block you are looking at."
+				stop
+			if arg 1 is "spruce":
+				grow tree of type tall redwood above the targeted block
+				message "{@prefix}A spruce tree has been grown above the block you are looking at."
+				stop
+			if arg 1 is "jungle":
+				grow tree of type tall jungle tree above the targeted block
+				message "{@prefix}A jungle tree has been grown above the block you are looking at."
+				stop
+			else:
+				send "{@prefix}%arg 1% is not a tree type. The only tree types are oak, spruce, and jungle."
+				stop
+        
+        
+        
+        
+command /tree [<text>]:
+	trigger:
+		if the targeted block is not grass or dirt:
+			message "{@prefix}Trees can only be grown on grass and dirt."
+			stop
+		if arg 1 is not set:
+			grow tree of type any tree above the targeted block
+			message "{@prefix}A tree has been grown above the block you are looking at."
+			stop
+		if arg 1 is set:
+			if arg 1 is "oak":
+				grow tree of type any regular tree above the targeted block
+				message "{@prefix}An oak tree has been grown above the block you are looking at."
+				stop
+			if arg 1 is "spruce":
+				grow tree of type any redwood above the targeted block
+				message "{@prefix}A spruce tree has been grown above the block you are looking at."
+				stop
+			if arg 1 is "jungle":
+				grow tree of type any jungle tree above the targeted block
+				message "{@prefix}A jungle tree has been grown above the block you are looking at."
+				stop
+			else:
+				send "{@prefix}%arg 1% is not a tree type. The only tree types are oak, spruce, and jungle."
+				stop
