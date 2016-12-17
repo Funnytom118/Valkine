@@ -552,7 +552,7 @@ command /speed [<text>] [<text>] [<Player>]:
         if arg 3 isn't online:
           send "{@notonline}" to player
 command /tree [<text>]:
-  permission: {@permprefix}.tree
+	permission: {@permprefix}.tree
   permission message: {@permmsg}
   aliases: /vessentials:tree
 	trigger:
