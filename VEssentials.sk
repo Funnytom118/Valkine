@@ -155,158 +155,210 @@ command /fly [<Player>]:
 command /gamemode [<text>] [<Player>]:
   permission: {@permprefix}.gamemode.survival
   permission message: {@permmsg}
-  aliases: /gm
+  aliases: /gm, /vessentials:gamemode, /vessentials:gm
   trigger:
     if arg 1 is set:
       if arg 2 is set:
-        if arg 2 is online:
+        if arg 2 isn't the player:
+          if arg 2 is online:
+            if arg 1 is "survival":
+              if player has permission "{@permprefix}.survival.others":
+                set arg 2's gamemode to survival
+                send "{@prefix} Set gamemode &csurvival &6for %player%" to player
+                send "{@prefix} Your gamemode was changed to &csurvival" to arg 2
+                stop
+            if arg 1 is "s":
+              if player has permission "{@permprefix}.survival.others":
+                set arg 2's gamemode to survival
+                send "{@prefix} Set gamemode &csurvival &6for %player%" to player
+                send "{@prefix} Your gamemode was changed to &csurvival" to arg 2
+                stop
+            if arg 1 is "0":
+              if player has permission "{@permprefix}.survival.others":
+                set arg 2's gamemode to survival
+                send "{@prefix} Set gamemode &csurvival &6for %player%" to player
+                send "{@prefix} Your gamemode was changed to &csurvival" to arg 2
+                stop
+            if arg 1 is "creative":
+              if player has permission "{@permprefix}.creative.others":
+                set arg 2's gamemode to creative
+                send "{@prefix} Set gamemode &ccreative &6for %player%" to player
+                send "{@prefix} Your gamemode was changed to &ccreative" to arg 2
+                stop
+            if arg 1 is "1":
+              if player has permission "{@permprefix}.creative.others":
+                set arg 2's gamemode to creative
+                send "{@prefix} Set gamemode &ccreative &6for %player%" to player
+                send "{@prefix} Your gamemode was changed to &ccreative" to arg 2
+                stop
+            if arg 1 is "c":
+              if player has permission "{@permprefix}.creative.others":
+                set arg 2's gamemode to creative
+                send "{@prefix} Set gamemode &ccreative &6for %player%" to player
+                send "{@prefix} Your gamemode was changed to &ccreative" to arg 2
+                stop
+            if arg 1 is "adventure":
+              if player has permission "{@permprefix}.adventure.others":
+                set arg 2's gamemode to adventure
+                send "{@prefix} Set gamemode &cadventure &6for %player%" to player
+                send "{@prefix} Your gamemode was changed to &cadventure" to arg 2
+                stop
+            if arg 1 is "a":
+              if player has permission "{@permprefix}.adventure.others":
+                set arg 2's gamemode to adventure
+                send "{@prefix} Set gamemode &cadventure &6for %player%" to player
+                send "{@prefix} Your gamemode was changed to &cadventure" to arg 2
+                stop
+            if arg 1 is "2":
+              if player has permission "{@permprefix}.adventure.others":
+                set arg 2's gamemode to adventure
+                send "{@prefix} Set gamemode &cadventure &6for %player%" to player
+                send "{@prefix} Your gamemode was changed to &cadventure" to arg 2
+                stop
+            if arg 1 is "spectator":
+              if player has permission "{@permprefix}.spectator.others":
+                set arg 2's gamemode to spectator
+                send "{@prefix} Set gamemode &cspectator &6for %player%" to player
+                send "{@prefix} Your gamemode was changed to &cspectator" to arg 2
+                stop
+            if arg 1 is "3":
+              if player has permission "{@permprefix}.spectator.others":
+                set arg 2's gamemode to spectator
+                send "{@prefix} Set gamemode &cspectator &6for %player%" to player
+                send "{@prefix} Your gamemode was changed to &cspectator" to arg 2
+                stop
+            if arg 1 is "sp":
+              if player has permission "{@permprefix}.spectator.others":
+                set arg 2's gamemode to spectator
+                send "{@prefix} Set gamemode &cspectator &6for %player%" to player
+                send "{@prefix} Your gamemode was changed to &cspectator" to arg 2
+                stop
+            else:
+              send "{@prefix} /gamemode <survival|s|0|creative|c|1|adventure|a|2|spectator|sp|3> [player]" to player
+          if arg 2 isn't online:
+            send "{@notonline}" to player
+        if arg 2 is the player:
           if arg 1 is "survival":
-            if player has permission "{@permprefix}.survival.others":
+            if player has permission "{@permprefix}.survival":
               set arg 2's gamemode to survival
-              send "{@prefix} Set gamemode &csurvival &6for %player%" to player
               send "{@prefix} Your gamemode was changed to &csurvival" to arg 2
               stop
           if arg 1 is "s":
-            if player has permission "{@permprefix}.survival.others":
+            if player has permission "{@permprefix}.survival":
               set arg 2's gamemode to survival
-              send "{@prefix} Set gamemode &csurvival &6for %player%" to player
               send "{@prefix} Your gamemode was changed to &csurvival" to arg 2
               stop
           if arg 1 is "0":
-            if player has permission "{@permprefix}.survival.others":
+            if player has permission "{@permprefix}.survival":
               set arg 2's gamemode to survival
-              send "{@prefix} Set gamemode &csurvival &6for %player%" to player
               send "{@prefix} Your gamemode was changed to &csurvival" to arg 2
               stop
           if arg 1 is "creative":
-            if player has permission "{@permprefix}.creative.others":
+            if player has permission "{@permprefix}.creative":
               set arg 2's gamemode to creative
-              send "{@prefix} Set gamemode &ccreative &6for %player%" to player
               send "{@prefix} Your gamemode was changed to &ccreative" to arg 2
               stop
           if arg 1 is "1":
-            if player has permission "{@permprefix}.creative.others":
+            if player has permission "{@permprefix}.creative":
               set arg 2's gamemode to creative
-              send "{@prefix} Set gamemode &ccreative &6for %player%" to player
               send "{@prefix} Your gamemode was changed to &ccreative" to arg 2
               stop
           if arg 1 is "c":
-            if player has permission "{@permprefix}.creative.others":
+            if player has permission "{@permprefix}.creative":
               set arg 2's gamemode to creative
-              send "{@prefix} Set gamemode &ccreative &6for %player%" to player
               send "{@prefix} Your gamemode was changed to &ccreative" to arg 2
               stop
           if arg 1 is "adventure":
-            if player has permission "{@permprefix}.adventure.others":
+            if player has permission "{@permprefix}.adventure":
               set arg 2's gamemode to adventure
-              send "{@prefix} Set gamemode &cadventure &6for %player%" to player
               send "{@prefix} Your gamemode was changed to &cadventure" to arg 2
               stop
           if arg 1 is "a":
-            if player has permission "{@permprefix}.adventure.others":
+            if player has permission "{@permprefix}.adventure":
               set arg 2's gamemode to adventure
-              send "{@prefix} Set gamemode &cadventure &6for %player%" to player
               send "{@prefix} Your gamemode was changed to &cadventure" to arg 2
               stop
           if arg 1 is "2":
-            if player has permission "{@permprefix}.adventure.others":
+            if player has permission "{@permprefix}.adventure":
               set arg 2's gamemode to adventure
-              send "{@prefix} Set gamemode &cadventure &6for %player%" to player
               send "{@prefix} Your gamemode was changed to &cadventure" to arg 2
               stop
           if arg 1 is "spectator":
-            if player has permission "{@permprefix}.spectator.others":
-              set arg 2's gamemode to spectator
-              send "{@prefix} Set gamemode &cspectator &6for %player%" to player
+            if player has permission "{@permprefix}.spectator":
+              set arg 2's gamemode to 3
               send "{@prefix} Your gamemode was changed to &cspectator" to arg 2
               stop
           if arg 1 is "3":
-            if player has permission "{@permprefix}.spectator.others":
-              set arg 2's gamemode to spectator
-              send "{@prefix} Set gamemode &cspectator &6for %player%" to player
+            if player has permission "{@permprefix}.spectator":
+              set arg 2's gamemode to 3
               send "{@prefix} Your gamemode was changed to &cspectator" to arg 2
               stop
           if arg 1 is "sp":
-            if player has permission "{@permprefix}.spectator.others":
-              set arg 2's gamemode to spectator
-              send "{@prefix} Set gamemode &cspectator &6for %player%" to player
+            if player has permission "{@permprefix}.spectator":
+              set arg 2's gamemode to 3
               send "{@prefix} Your gamemode was changed to &cspectator" to arg 2
               stop
           else:
             send "{@prefix} /gamemode <survival|s|0|creative|c|1|adventure|a|2|spectator|sp|3> [player]" to player
-        if arg 2 isn't online:
-          send "{@notonline}" to player
       if arg 2 isn't set:
         if arg 1 is "survival":
           if player has permission "{@permprefix}.survival":
             set player's gamemode to survival
-            send "{@prefix} Set gamemode &csurvival &6for %player%" to player
             send "{@prefix} Your gamemode was changed to &csurvival" to player
             stop
         if arg 1 is "s":
           if player has permission "{@permprefix}.survival":
             set player's gamemode to survival
-            send "{@prefix} Set gamemode &csurvival &6for %player%" to player
             send "{@prefix} Your gamemode was changed to &csurvival" to player
             stop
         if arg 1 is "0":
           if player has permission "{@permprefix}.survival":
             set player's gamemode to survival
-            send "{@prefix} Set gamemode &csurvival &6for %player%" to player
             send "{@prefix} Your gamemode was changed to &csurvival" to player
             stop
         if arg 1 is "creative":
           if player has permission "{@permprefix}.creative":
             set player's gamemode to creative
-            send "{@prefix} Set gamemode &ccreative &6for %player%" to player
             send "{@prefix} Your gamemode was changed to &ccreative" to player
             stop
         if arg 1 is "1":
           if player has permission "{@permprefix}.creative":
             set player's gamemode to creative
-            send "{@prefix} Set gamemode &ccreative &6for %player%" to player
             send "{@prefix} Your gamemode was changed to &ccreative" to player
             stop
         if arg 1 is "c":
           if player has permission "{@permprefix}.creative":
             set player's gamemode to creative
-            send "{@prefix} Set gamemode &ccreative &6for %player%" to player
             send "{@prefix} Your gamemode was changed to &ccreative" to player
             stop
         if arg 1 is "adventure":
           if player has permission "{@permprefix}.adventure":
             set player's gamemode to adventure
-            send "{@prefix} Set gamemode &cadventure &6for %player%" to player
             send "{@prefix} Your gamemode was changed to &cadventure" to player
             stop
         if arg 1 is "a":
           if player has permission "{@permprefix}.adventure":
             set player's gamemode to adventure
-            send "{@prefix} Set gamemode &cadventure &6for %player%" to player
             send "{@prefix} Your gamemode was changed to &cadventure" to player
             stop
         if arg 1 is "2":
           if player has permission "{@permprefix}.adventure":
             set player's gamemode to adventure
-            send "{@prefix} Set gamemode &cadventure &6for %player%" to player
             send "{@prefix} Your gamemode was changed to &cadventure" to player
             stop
         if arg 1 is "spectator":
           if player has permission "{@permprefix}.spectator":
-            set player's gamemode to spectator
-            send "{@prefix} Set gamemode &cspectator &6for %player%" to player
+            set player's gamemode to 3
             send "{@prefix} Your gamemode was changed to &cspectator" to player
             stop
         if arg 1 is "3":
           if player has permission "{@permprefix}.spectator":
-            set player's gamemode to spectator
-            send "{@prefix} Set gamemode &cspectator &6for %player%" to player
+            set player's gamemode to 3
             send "{@prefix} Your gamemode was changed to &cspectator" to player
             stop
         if arg 1 is "sp":
           if player has permission "{@permprefix}.spectator":
-            set player's gamemode to spectator
-            send "{@prefix} Set gamemode &cspectator &6for %player%" to player
+            set player's gamemode to 3
             send "{@prefix} Your gamemode was changed to &cspectator" to player
             stop
         else:
