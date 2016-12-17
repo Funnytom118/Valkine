@@ -1,3 +1,4 @@
+/bigtree <oak|spruce|birch|jungle> - Spawns a big tree where you're looking
 /break - Breaks the block you're looking at
 /exp <set|add|remove> <levels> <player> - Give, take or set the amount of experience levels a player has.
 /feed [player] - If an argument isn't specified, your health will be filled. If an argument is specified, their hunger will be filled
