@@ -15,3 +15,6 @@
 /tree <oak|spruce|birch|jungle> - Spawn a tree where you're looking
 /setspawn - Set the spawn location
 /spawn [player] - Teleport you (or the player) to spawn
+/warp [name] - Teleports you to or lists your homes
+/setwarp [name] - Sets a warp to your location
+/delwarp [name] - Deletes a warp
