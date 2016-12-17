@@ -1,0 +1,136 @@
+command /kits [<text>] [<text>]:
+	trigger:
+		if arg-1 is not set:
+			if player have permissions "{@Admin}":
+				send "&a&l&m-----------------= &r&6KITS+ &a&l&m=-----------------"
+				send ""
+				send "&b&l /kits create <name> &7(Create a new kit)"
+				send "&b&l /kits remove <name> &7(Remove a kit)"
+				send "&b&l /kits give <name> &7(Give a kit)"
+				send "&b&l /kits list &7(See all kits)"
+				send ""
+				send "&b&l /kits reload &7(Reload the skript)"
+				send ""
+				send "&a&l&m---------------------=X=--------------------"
+			else:
+				send "{@Prefix} {@NoPerms}"
+		if arg-1 is "create":
+			if player have permission "{@Admin}":
+				if arg-2 is not set:
+					send "&a&l&m--------------= &r&6KITS+ &a&l&m=--------------"
+					send ""
+					send "&b&l /kits create <name> &7(Create a new kit)"
+					send ""
+					send "&a&l&m------------------=X=-----------------"
+				else:
+					player can't hold 36 wooden swords:
+						if size of {kit-list::*} < 40:
+							if {kit-created::%arg-2%} is not set:
+								set {kit-helm::%arg-2%} to helmet of player
+								set {kit-chest::%arg-2%} to chestplate of player
+								set {kit-legs::%arg-2%} to leggings of player
+								set {kit-boots::%arg-2%} to boots of player
+								set {_slot} to 0
+								loop 36 times:
+									set {slot.%{_slot}%.%arg-2%} to slot {_slot} of player's inventory
+									add 1 to {_slot}
+								set {kit-created::%arg 2%} to true
+								add arg 2 to {kit-list::*}
+								wait 2 ticks
+								clear player's inventory
+								send "{@Prefix} &aYou have created the kit &6&l%arg-2%."
+								stop
+							else:
+								send "{@Prefix} &cThis kit already exist."
+						else:
+							send "{@Prefix} &cReached the maximun kits!."
+					if player can hold 36 wooden swords:
+						message "{@Prefix} {@InvEmpy}"
+						stop		
+			else:
+				send "{@Prefix} {@NoPerms}"
+				stop
+		
+		if arg-1 is "remove":
+			if player have permission "{@Admin}":
+				if arg-2 is not set:
+					send "&a&l&m--------------= &r&6KITS+ &a&l&m=--------------"
+					send ""
+					send "&b&l /kits remove <name> &7(Remove a kit)"
+					send ""
+					send "&a&l&m------------------=X=-----------------"
+				else:
+					if {kit-created::%arg-2%} is true:
+						remove arg-2 from {kit-list::*}
+						delete {kit-created::%arg 2%}
+						set {_slot} to 0
+						loop 36 times:
+							delete {slot.%{_slot}%.%arg-2%}
+							add 1 to {_slot}
+						delete {kit-helm::%arg-2%}
+						delete {kit-chest::%arg-2%}
+						delete {kit-legs::%arg-2%}
+						delete {kit-boots::%arg-2%}
+						send "{@Prefix} &aYou have removed the kit &6&l%arg-2%."
+					else:
+						send "{@Prefix} &cThis kit does not exist."	
+			else:
+				send "{@Prefix} {@NoPerms}"
+				stop
+		if arg-1 is "give":
+			if player have permissions "{@User}":
+				if arg-2 is not set:
+					send "&a&l&m--------------= &r&6KITS+ &a&l&m=--------------"
+					send ""
+					send "&b&l /kits give <name> &7(Give a kit)"
+					send ""
+					send "&a&l&m------------------=X=-----------------"
+				else:
+					if {kit-created::%arg-2%} is true:
+						clear player's inventory
+						wait 1 tick
+						equip player with {kit-helm::%arg-2%}
+						equip player with {kit-chest::%arg-2%}
+						equip player with {kit-legs::%arg-2%}
+						equip player with {kit-boots::%arg-2%}
+						wait 1.5 ticks
+						set {_slot} to 0
+						loop 36 times:
+							set slot {_slot} of player to {slot.%{_slot}%.%arg-2%}
+							add 1 to {_slot}
+						wait 1 tick
+						send "{@Prefix} &aYou have chosen the kit &6&l%arg-2%."
+			else:
+				send "{@Prefix} {@NoPerms}"
+		if arg-1 is "list":
+			if player have permissions "{@User}":
+				if size of {kit-list::*} is 0:
+					open chest with 4 rows named "&l&oKits+ List" to player
+					wait 1 tick
+					set {_slot} to 10
+					loop 7 times:
+						format slot {_slot} of player with stained glass pane:14 named "&4&lERROR" with lore "||&cNo kits created||||&7Click to close!" to close
+						add 1 to {_slot}
+					set {_slot} to 19
+					loop 7 times:
+						format slot {_slot} of player with stained glass pane:14 named "&4&lERROR" with lore "||&cNo kits created||||&7Click to close!" to close
+						add 1 to {_slot}
+				else:
+					open chest with 4 rows named "&l&oKits+ List" to player
+					wait 1 tick
+					set {_slot} to 0
+					loop {kit-list::*}:		
+						format slot {_slot} of player with book named "&a&l%loop-value%" to be unstealable
+						add 1 to {_slot}
+			else:
+				send "{@Prefix} {@NoPerms}"
+		if arg-1 is "reload":
+			if player have permissions "{@Admin}":
+				execute console command "sk reload {@Skript}"
+				wait 1 tick
+				send "{@Prefix} &aReload completed!"
+				
+command /kit:
+	trigger:
+		send "{@Prefix} &cIncorrect command, use /kits"
+		stop
