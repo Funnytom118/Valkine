@@ -1,19 +1,37 @@
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+#																								#
+# 			 		 This was created by Funnytom118 & Osto468							#
+# 	This is copywritten under the GNU GPLv3 License for Funnytom118 & Osto468 only.		#
+#																								#
+#  	 You may not copy, or edit any of the code inside of this file (excluding options section)	#
+# 	    	      Editing anything in here WILL break the plugin.								#
+#																								#
+# 				 					 VERSION 1.0  												#
+#																								#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+#																								#
+#     You can edit the 'options' section below, to configure it the way you want it to be.		#
+#      We have already set some default messages, so you can keep those if you would like.		#
+#																								#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 options:
-  #The thingy going in front of all most of the messages from the plugin. If possible, specify a color code afterwards.
-  prefix: &8[&9&lVEssentials&8]&6
-  #The word going in front of the permissions. Per default it is vessentials.
-  permprefix: vessentials
-  #The error message that will display if a player doesn't have permission 
-  permmsg: &cYou don't have access to this command
-  #The error message displayed when a player isn't online
-  notonline: &4Error: &cThe set player isn't online
-  #The error message displayed when a player isn't set
-  specify: &4Error: &cPlease specify a player.
-  #The starting balance of your players. Only add numbers here. Lowest is 0.
-  startbal: 100
+  prefix: VEssentials                                                     #Prefix in front of all major commands
+  permprefix: vessentials                                                 #For example, permission nodes will be {permprefix}.fly
+  permmsg: You don't have permission!                                     #No permission message
+  notonline: &4Error: &cThe set player isn't online                       #The error message displayed when a player isn't online
+  specify: &4Error: &cPlease specify a player.                            #The error message displayed when a player isn't set
+  startbal: 100                                                           #The starting balance of your players. Only add numbers here. Lowest is 0.
+	basecolor1: &b					                                           			#The main color of all messages (Must include the & code)
+	basecolor2: &9 				  			                                         	#The secondary color of all messages (Must include the & code)
+	basecolor3: &8 								                                          #The 'arrow' color of all messages (Must include the & code)
+	basecolor4: &7 						                                           		#The information color of all messages (Must include the & code)
   
 #http://wiki.ess3.net/wiki/Command_Reference for alphabetical ordering of commands which are currently in Essentials.
-
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+#																								#
+# 	   		 DO NOT edit anything under this line, or you will break the code.			          		#
+#																								#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 on first join:
   set {vessentials::balance::%player's uuid%} to {@startbal}
 #/bigtree
