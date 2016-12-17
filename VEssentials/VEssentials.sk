@@ -186,7 +186,7 @@ command /gamemode [<text>] [<Player>]:
   trigger:
     if arg 1 is set:
       if arg 2 is set:
-        if arg 2 isn't the executor:
+        if arg 2 isn't the player:
           if arg 2 is online:
             if arg 1 is "survival":
               if player has permission "{@permprefix}.survival.others":
@@ -264,7 +264,7 @@ command /gamemode [<text>] [<Player>]:
               send "{@prefix} /gamemode <survival|s|0|creative|c|1|adventure|a|2|spectator|sp|3> [player]" to player
           if arg 2 isn't online:
             send "{@notonline}" to player
-        if arg 2 is executor:
+        if arg 2 is the player:
           if arg 1 is "survival":
             if player has permission "{@permprefix}.survival":
               set arg 2's gamemode to survival
@@ -312,17 +312,17 @@ command /gamemode [<text>] [<Player>]:
               stop
           if arg 1 is "spectator":
             if player has permission "{@permprefix}.spectator":
-              set arg 2's gamemode to 3
+              set arg 2's gamemode to spectator
               send "{@prefix} Your gamemode was changed to &cspectator" to arg 2
               stop
           if arg 1 is "3":
             if player has permission "{@permprefix}.spectator":
-              set arg 2's gamemode to 3
+              set arg 2's gamemode to spectator
               send "{@prefix} Your gamemode was changed to &cspectator" to arg 2
               stop
           if arg 1 is "sp":
             if player has permission "{@permprefix}.spectator":
-              set arg 2's gamemode to 3
+              set arg 2's gamemode to spectator
               send "{@prefix} Your gamemode was changed to &cspectator" to arg 2
               stop
           else:
@@ -375,17 +375,17 @@ command /gamemode [<text>] [<Player>]:
             stop
         if arg 1 is "spectator":
           if player has permission "{@permprefix}.spectator":
-            set player's gamemode to 3
+            set player's gamemode to spectator
             send "{@prefix} Your gamemode was changed to &cspectator" to player
             stop
         if arg 1 is "3":
           if player has permission "{@permprefix}.spectator":
-            set player's gamemode to 3
+            set player's gamemode to spectator
             send "{@prefix} Your gamemode was changed to &cspectator" to player
             stop
         if arg 1 is "sp":
           if player has permission "{@permprefix}.spectator":
-            set player's gamemode to 3
+            set player's gamemode to spectator
             send "{@prefix} Your gamemode was changed to &cspectator" to player
             stop
         else:
@@ -411,7 +411,7 @@ command /skull [<offlinePlayer>]:
     give player the skull of argument
     send "{@prefix} Added the skull of %arg% to your inventory" to player
     stop
-command /speed [<text>] [<double>] [<Player>]:
+command /speed [<text>] [<text>] [<[<Player>]:
   permission: {@permprefix}.speed
   permission message: {@permmsg}
   executable by: players
@@ -421,20 +421,26 @@ command /speed [<text>] [<double>] [<Player>]:
       if arg 1 is set:
         if arg 1 is "flying":
           if arg 2 is set:
-            if arg 2 is between -1 and 1:
+            if arg 2 is a number between -1 and 1:
               set player's flying speed to arg 2
               send "{@prefix} Flying speed changed to %arg 2%" to player
               stop
+            if arg 2 is "reset":
+              set player's flying speed to 0.2
+              send "{@prefix} Your flying speed has been changed to the default" to player
             else:
               send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
           else:
             send "{@prefix} /speed <walking|flying> <speed> [player]" to player
         if arg 1 is "walking":
           if arg 2 is set:
-            if arg 2 is between -1 and 1:
+            if arg 2 is a number between -1 and 1:
               set player's walking speed to arg 2
               send "{@prefix} Walking speed changed to %arg 2%" to player
               stop
+            if arg 2 is "reset":
+              set player's walking speed to 0.1
+              send "{@prefix} Your walking speed has been changed to the default" to player
             else:
               send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
           else:
@@ -449,22 +455,28 @@ command /speed [<text>] [<double>] [<Player>]:
           if arg 1 is set:
             if arg 1 is "flying":
               if arg 2 is set:
-                if arg 2 is between -1 and 1:
+                if arg 2 is a number between -1 and 1:
                   set arg 3's flying speed to arg 2
                   send "{@prefix} Flying speed changed to %arg 2% for %arg 3%" to player
                   send "{@prefix} Your flying speed was changed to %arg 2%" to arg 3
                   stop
+                if arg 2 is "reset":
+                  set player's flying speed to 0.2
+                  send "{@prefix} Your flying speed has been changed to the default" to player
                 else:
                   send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
               else:
                 send "{@prefix} /speed <walking|flying> <speed> [player]" to player
             if arg 1 is "walking":
               if arg 2 is set:
-                if arg 2 is between -1 and 1:
+                if arg 2 is a number between -1 and 1:
                   set arg 3's walking speed to arg 2
                   send "{@prefix} Walking speed changed to %arg 2% for %arg 3%" to player
                   send "{@prefix} Your walking speed was changed to %arg 2%" to arg 3
                   stop
+                if arg 2 is "reset":
+                  set player's walking speed to 0.1
+                  send "{@prefix} Your walking speed has been changed to the default" to player
                 else:
                   send: "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
               else:
@@ -600,19 +612,5 @@ command /pay [<Player>] [<integer>]:
         send "{@prefix} Please specify an amount to send" to player
     else:
       send "{@notonline}" to player
-command /killall [<text>]:
-  permission: {@permprefix}.killall
-  permission message: {@permmsg}
-  aliases: /vessentials:killall
-  trigger:
-    if arg 1 is set:
-      if arg 1 is "chicken":
-        loop all chickens:
-          kill all chickens in the player's world
-          send "Killed %loop% chickens" to player
-      if arg 1 is "pig":
-        kill all pigs in the player's world
-      if arg 1 is "rabbit":
-        kill all rabbits in the player's world
-      if arg 1 is "guardian":
-        kill all guardians in the player's world
+
+        
