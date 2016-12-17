@@ -1,18 +1,18 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-#																								#
-# 			 		 This was created by Funnytom118 & Osto468							#
-# 	This is copywritten under the GNU GPLv3 License for Funnytom118 & Osto468 only.		#
-#																								#
-#  	 You may not copy, or edit any of the code inside of this file (excluding options section)	#
-# 	    	      Editing anything in here WILL break the plugin.								#
-#																								#
-# 				 					 VERSION 1.0  												#
-#																								#
+#                                                                                               #
+#            This was created by Funnytom118 & Osto468                                          #
+#   This is copywritten under the GNU GPLv3 License for Funnytom118 & Osto468 only.             #
+#                                                                                               #
+#    You may not copy, or edit any of the code inside of this file (excluding options section)  #
+#               Editing anything in here WILL break the plugin.                                 #
+#                                                                                               #
+#                                         VERSION 1.0                                           #
+#                                                                                               #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-#																								#
-#     You can edit the 'options' section below, to configure it the way you want it to be.		#
-#      We have already set some default messages, so you can keep those if you would like.		#
-#																								#
+#                                                                                               #
+#     You can edit the 'options' section below, to configure it the way you want it to be.      #
+#      We have already set some default messages, so you can keep those if you would like.      #
+#                                                                                               #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 options:
   prefix: VEssentials                                                     #Prefix in front of all major commands
@@ -22,18 +22,18 @@ options:
   specify: &4Error: &cPlease specify a player.                            #The error message displayed when a player isn't set
   startbal: 100                                                           #The starting balance of your players. Only add numbers here. Lowest is 0.
   feedcd: a minute                                                        #The cooldown between using /feed. Make a prefix [like a or 2] and then use minutes/hours/seconds/days. Use singular if it is only one (timeframe)
-	healcd: a minute                                                        #The cooldown between using /heal. Make a prefix [like a or 2] and then use minutes/hours/seconds/days. Use singular if it is only one (timeframe)
+  healcd: a minute                                                        #The cooldown between using /heal. Make a prefix [like a or 2] and then use minutes/hours/seconds/days. Use singular if it is only one (timeframe)
   kitcd: a day                                                            #The cooldown between using each kit the player has permission to. Make a prefix [like a or 2] and then use minutes/hours/seconds/days. Use singular if it is only one (timeframe)
-  basecolor1: &b					                                           			#The main color of all messages (Must include the & code)
-  basecolor2: &9 				  			                                         	#The secondary color of all messages (Must include the & code)
-  basecolor3: &8 								                                          #The 'arrow' color of all messages (Must include the & code)
-  basecolor4: &7 						                                           		#The information color of all messages (Must include the & code)
+  basecolor1: &b                                                          #The main color of all messages (Must include the & code)
+  basecolor2: &9                                                          #The secondary color of all messages (Must include the & code)
+  basecolor3: &8                                                          #The 'arrow' color of all messages (Must include the & code)
+  basecolor4: &7                                                          #The information color of all messages (Must include the & code)
   
 #http://wiki.ess3.net/wiki/Command_Reference for alphabetical ordering of commands which are currently in Essentials.
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-#																								#
-# 	   		 DO NOT edit anything under this line, or you will break the code.			          		#
-#																								#
+#                                                                                               #
+#          DO NOT edit anything under this line, or you will break the code.                    #
+#                                                                                               #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
  
 #http://wiki.ess3.net/wiki/Command_Reference for alphabetical ordering of commands which are currently in Essentials.
@@ -45,31 +45,31 @@ on damage:
     cancel event
 
 command /bigtree [<text>]:
-	aliases: /largetree
-	trigger:
-		if the targeted block is not grass or dirt:
-			message "{@prefix}Trees can only be grown on grass and dirt."
-			stop
-		if arg 1 is not set:
-			grow tree of type large regular tree above the targeted block
-			message "{@prefix}A tree has been grown above the block you are looking at."
-			stop
-		if arg 1 is set:
-			if arg 1 is "oak":
-				grow tree of type large regular tree above the targeted block
-				message "{@prefix}An oak tree has been grown above the block you are looking at."
-				stop
-			if arg 1 is "spruce":
-				grow tree of type tall redwood above the targeted block
-				message "{@prefix}A spruce tree has been grown above the block you are looking at."
-				stop
-			if arg 1 is "jungle":
-				grow tree of type tall jungle tree above the targeted block
-				message "{@prefix}A jungle tree has been grown above the block you are looking at."
-				stop
-			else:
-				send "{@prefix}%arg 1% is not a tree type. The only tree types are oak, spruce, and jungle."
-				stop
+  aliases: /largetree
+  trigger:
+    if the targeted block is not grass or dirt:
+      message "{@prefix}Trees can only be grown on grass and dirt."
+      stop
+    if arg 1 is not set:
+      grow tree of type large regular tree above the targeted block
+      message "{@prefix}A tree has been grown above the block you are looking at."
+      stop
+    if arg 1 is set:
+      if arg 1 is "oak":
+        grow tree of type large regular tree above the targeted block
+        message "{@prefix}An oak tree has been grown above the block you are looking at."
+        stop
+      if arg 1 is "spruce":
+        grow tree of type tall redwood above the targeted block
+        message "{@prefix}A spruce tree has been grown above the block you are looking at."
+        stop
+      if arg 1 is "jungle":
+        grow tree of type tall jungle tree above the targeted block
+        message "{@prefix}A jungle tree has been grown above the block you are looking at."
+        stop
+      else:
+        send "{@prefix}%arg 1% is not a tree type. The only tree types are oak, spruce, and jungle."
+        stop
 command /break:
   permission: {@permprefix}.break
   permission message: {@permmsg}
@@ -643,13 +643,13 @@ command /speed [<text>] [<text>] [<Player>]:
             if arg 1 is "walking":
               if arg 2 is set:
                 if arg 2 is more than -1:
-									if arg 2 is less than 1:
-	                  set arg 3's walking speed to arg 2
-  	                send "{@prefix} Walking speed changed to %arg 2% for %arg 3%" to player
-    	              send "{@prefix} Your walking speed was changed to %arg 2%" to arg 3
-      	            stop
-									else:
-                  	send: "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
+                  if arg 2 is less than 1:
+                    set arg 3's walking speed to arg 2
+                    send "{@prefix} Walking speed changed to %arg 2% for %arg 3%" to player
+                    send "{@prefix} Your walking speed was changed to %arg 2%" to arg 3
+                    stop
+                  else:
+                    send: "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
                 else:
                   send: "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
               else:
@@ -661,43 +661,43 @@ command /speed [<text>] [<text>] [<Player>]:
         if arg 3 isn't online:
           send "{@notonline}" to player
 command /time [<text>]:
-	permission: {@permprefix}.time
-	permission message: {@permmsg}
-	aliases: /vessentials:time
-	trigger:
-		if arg 1 is set:
-			set time in the player's world to arg 1
-			send "{@prefix} Time set to %arg 1%
-		else:
-			send "{@prefix} /time <##:##|## am/pm>
+  permission: {@permprefix}.time
+  permission message: {@permmsg}
+  aliases: /vessentials:time
+  trigger:
+    if arg 1 is set:
+      set time in the player's world to arg 1
+      send "{@prefix} Time set to %arg 1%
+    else:
+      send "{@prefix} /time <##:##|## am/pm>
 command /tree [<text>]:
-	permission: {@permprefix}.tree
+  permission: {@permprefix}.tree
   permission message: {@permmsg}
   aliases: /vessentials:tree
-	trigger:
-		if the targeted block is not grass or dirt:
-			message "{@prefix}Trees can only be grown on grass and dirt."
-			stop
-		if arg 1 is not set:
-			grow tree of type any tree above the targeted block
-			message "{@prefix}A tree has been grown above the block you are looking at."
-			stop
-		if arg 1 is set:
-			if arg 1 is "oak":
-				grow tree of type any regular tree above the targeted block
-				message "{@prefix}An oak tree has been grown above the block you are looking at."
-				stop
-			if arg 1 is "spruce":
-				grow tree of type any redwood above the targeted block
-				message "{@prefix}A spruce tree has been grown above the block you are looking at."
-				stop
-			if arg 1 is "jungle":
-				grow tree of type any jungle tree above the targeted block
-				message "{@prefix}A jungle tree has been grown above the block you are looking at."
-				stop
-			else:
-				send "{@prefix}%arg 1% is not a tree type. The only tree types are oak, spruce, and jungle."
-				stop
+  trigger:
+    if the targeted block is not grass or dirt:
+      message "{@prefix}Trees can only be grown on grass and dirt."
+      stop
+    if arg 1 is not set:
+      grow tree of type any tree above the targeted block
+      message "{@prefix}A tree has been grown above the block you are looking at."
+      stop
+    if arg 1 is set:
+      if arg 1 is "oak":
+        grow tree of type any regular tree above the targeted block
+        message "{@prefix}An oak tree has been grown above the block you are looking at."
+        stop
+      if arg 1 is "spruce":
+        grow tree of type any redwood above the targeted block
+        message "{@prefix}A spruce tree has been grown above the block you are looking at."
+        stop
+      if arg 1 is "jungle":
+        grow tree of type any jungle tree above the targeted block
+        message "{@prefix}A jungle tree has been grown above the block you are looking at."
+        stop
+      else:
+        send "{@prefix}%arg 1% is not a tree type. The only tree types are oak, spruce, and jungle."
+        stop
 #/unlimited
 #/workbench
 ###############################################
@@ -736,15 +736,15 @@ command /spawn [<Player>]:
       else:
         send "{@permmsg}" to player
 command /sethome [<text>]:
-	permission: {@permprefix}.sethome
-	permission message: {@permmsg}
-	aliases: /vessentials:sethome
-	trigger:
-		if arg 1 is set:
-			set {vessentials::home::%arg 1%::%player's uuid%} to player's location
+  permission: {@permprefix}.sethome
+  permission message: {@permmsg}
+  aliases: /vessentials:sethome
+  trigger:
+    if arg 1 is set:
+      set {vessentials::home::%arg 1%::%player's uuid%} to player's location
       send "{@prefix} Home set" to player
       add arg 1 to {vessentials::homes::%player's uuid%::*}
-			stop
+      stop
     if arg 1 isn't set:
       send "{@prefix} /sethome <name>" to player
 command /home [<text>]:
@@ -780,15 +780,15 @@ command /delhome [<text>]:
       send "{@prefix} /delhome <name>" to player
       stop
 command /setwarp [<text>]:
-	permission: {@permprefix}.setwarp
-	permission message: {@permmsg}
-	aliases: /vessentials:setwarp
-	trigger:
-		if arg 1 is set:
-			set {vessentials::warp::%arg 1%} to player's location
+  permission: {@permprefix}.setwarp
+  permission message: {@permmsg}
+  aliases: /vessentials:setwarp
+  trigger:
+    if arg 1 is set:
+      set {vessentials::warp::%arg 1%} to player's location
       send "{@prefix} Warp set" to player
       add arg 1 to {vessentials::warps::*}
-			stop
+      stop
     if arg 1 isn't set:
       send "{@prefix} /setwarp <name>" to player
 command /warp [<text>]:
