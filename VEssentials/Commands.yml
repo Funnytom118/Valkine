@@ -18,3 +18,6 @@
 /warp [name] - Teleports you to or lists your homes
 /setwarp [name] - Sets a warp to your location
 /delwarp [name] - Deletes a warp
+/createkit [name] - Create a kit with what is in your inventory
+/delkit [name] - Delete a specific kit
+/kit <name> [player] - Gives you a kit. If you don't have room in your inventory, you will recieve a warning message.
