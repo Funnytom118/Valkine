@@ -27,11 +27,11 @@ vessentials.delhome
 vessentials.warp
 vessentials.delwarp
 vessentials.setwarp
-vessentials
-vessentials
-vessentials
-vessentials
-vessentials
+vessentials.createkit
+vessentials.delkit
+vessentials.kit
+vessentials.kit.[kitname]
+vessentials.kit.others
 vessentials
 vessentials
 vessentials
