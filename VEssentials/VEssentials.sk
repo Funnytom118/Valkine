@@ -411,7 +411,7 @@ command /skull [<offlinePlayer>]:
     give player the skull of argument
     send "{@prefix} Added the skull of %arg% to your inventory" to player
     stop
-command /speed [<text>] [<text>] [<[<Player>]:
+command /speed [<text>] [<text>] [<Player>]:
   permission: {@permprefix}.speed
   permission message: {@permmsg}
   executable by: players
