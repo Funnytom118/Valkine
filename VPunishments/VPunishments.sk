@@ -1,0 +1,134 @@
+command /kick [<player>] [<text>]:
+	description: Kick a Player With or Without a Reason
+	permission: skess.kick
+	usage: /kick <player> [reason]
+	permission message: {@noperm}
+	trigger:
+		if arg 1 is not set:
+			send "{@prefix}You must specify a player to kick."
+			stop
+		if arg 1 is set:
+			if arg 2 is not set:
+				kick arg 1 due to "{@defaultkickreason}"
+				broadcast "{@prefix}%arg 1% has been kicked for {@defaultkickreason}"
+				stop
+			if arg 2 is set:
+				kick arg 1 due to "%arg 2%"
+				broadcast "{@prefix}%arg 1% has been kicked for %arg 2%"
+				stop
+        
+        
+        
+command /kickall [<text>]:
+	description: Kick All Players With or Without a Reason
+	permission: skess.kickall
+	usage: /kickall [reason]
+	permission message: {@noperm}
+	trigger:
+		if arg 1 is not set:
+			kick all players due to "{@defaultkickreason}"
+			stop
+		if arg 1 is set:
+			kick all players due to "%arg 1%"
+			stop
+      
+      
+command /tempban [<offlineplayer>] [<timespan>]:
+	description: Temporarily Ban a Player for a Certain Amount of Time
+	permission: skess.thunder
+	usage: /tempban <player> <time>
+	permission message: {@noperm}
+	trigger:
+		if arg 1 is not set:
+			send "{@prefix}You must specify a player to temporarily ban."
+			stop
+		if arg 1 is set:
+			if arg 2 is not set:
+				send "{@prefix}You must specify an amount of time, such as ""10 seconds"", to ban %arg 1%."
+				stop
+			if arg 2 is set:
+				broadcast "{@prefix}{@tempbanreason}"
+				set {tempban::%uuid of arg 1%} to argument 2
+				set {tempban.timestamp::%uuid of arg 1%} to now
+				kick arg 1 due to "{@tempbanreason}"
+				stop
+        
+command /ban [<offlineplayer>] [<text>]:
+	description: Ban a Player With or Without a Reason
+	permission: skess.ban
+	usage: /ban <player> [reason]
+	permission message: {@noperm}
+	trigger:
+		if arg 1 is not set:
+			send "{@prefix}You must specify a player."
+			stop
+		if arg 1 is set:
+			if arg 2 is not set:
+				ban arg 1 because "{@defaultbanreason}"
+				broadcast "{@prefix}%arg 1% has been banned for {@defaultbanreason}"
+				stop
+			if arg 2 is set:
+				ban arg 1 because "%arg 2%"
+				broadcast "{@prefix}%arg 1% has been banned for %arg 2%"
+				stop
+				
+command /banip [<offlineplayer>] [<text>]:
+	description: IP-Ban a Player With or Without a Reason
+	permission: skess.ipban
+	usage: /banip <player> [reason]
+	permission message: {@noperm}
+	trigger:
+		if arg 1 is not set:
+			send "{@prefix}You must specify a player."
+			stop
+		if arg 1 is set:
+			if arg 2 is not set:
+				ip-ban arg 1 because "{@defaultbanreason}"
+				broadcast "{@prefix}%arg 1% has been IP-banned for {@defaultbanreason}"
+				stop
+			if arg 2 is set:
+				ip-ban arg 1 because "%arg 2%"
+				broadcast "{@prefix}%arg 1% has been IP-banned for %arg 2%"
+				stop
+        
+        
+command /mute [<player>]:
+	description: Mute a Player
+	permission: skess.mute
+	usage: /mute(silence) <player>
+	permission message: {@noperm}
+	aliases: /silence
+	trigger:
+		if arg 1 is not set:
+			send "{@prefix}You must specify a player to mute."
+			stop
+		if arg 1 is set:
+			if {mute::%uuid of arg 1%} is not set:
+				set {mute::%uuid of arg 1%} to 1
+				send "{@prefix}You have been muted." to arg 1
+				broadcast "{@prefix}%arg 1% has been muted."
+				stop
+			if {mute::%uuid of arg 1%} is set:
+				clear {mute::%uuid of arg 1%}
+				send "{@prefix}You are no longer muted." to arg 1
+				broadcast "{@prefix}%arg 1% is no longer muted."
+				stop
+        
+        
+on chat:
+ if {mute::%uuid of player%} is set:
+		cancel the event
+		send "{@prefix}You are muted and cannot speak."
+		stop
+    
+    
+on connect:
+	if {tempban::%uuid of player%} is set:
+		set {_tempban} to difference between now and {tempban.timestamp::%uuid of player%}
+		reduce {_tempban} by {tempban::%uuid of player%}
+		if difference between now and {tempban.timestamp::%uuid of player%} is bigger than {tempban::%uuid of player%}:
+			broadcast "{@prefix}%player% is no longer temporarily banned and is joining the server."
+			clear {tempban.time::%uuid of player%}
+			clear {tempban.timestamp::%uuid of player%}
+		else:
+			kick the player due to "{@tempbankick}"
