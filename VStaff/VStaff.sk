@@ -1,6 +1,7 @@
 command /staff [<text>]:
 	aliases: /helpers, /helper, /moderator, /moderators, /admin, /admins
 	description: Lists different staff!
+	executable by: players
 	trigger:
 		if arg-1 is "helpers":
 			send "&8&m----------&r &9&lHelpers &8&m----------" to player
