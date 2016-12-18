@@ -3,24 +3,30 @@ command /staff [<text>]:
 	trigger:
 		if arg-1 is "helpers":
 			send "&8&m----------&r &9&lHelpers &8&m----------" to player
+			send "" to player
 			send "&9Jr. Helper: &b<none>" to player
 			send "&9Helper: &b<none>" to player
 			send "&9Sr. Helper: &b<none>" to player
 			send "&9Head Helper: &b<none>" to player
+			send "" to player
 			send "&8&m----------&r &9&lHelpers &8&m----------" to player
 			stop
 		if arg-1 is "moderators":
 			send "&8&m----------&r &9&lModerators &8&m----------" to player
+			send "" to player
 			send "&9Jr. Moderator: &b<none>" to player
 			send "&9Moderator: &b<none>" to player
 			send "&9Sr. Moderator: &b<none>" to player
 			send "&9Head Moderator: &b<none>" to player
+			send "" to player
 			send "&8&m----------&r &9&lModerators &8&m----------" to player
 			stop
 		if arg-1 is "admins":
 			send "&8&m----------&r &9&lAdministrators &8&m----------" to player
 			send "" to player
-			send "&9Admins: &bFunnytom118, Osto468, Valzar" to player
+			send "&9Admin: &bFunnytom118, Osto468, Valzar" to player
+			send "&9Developer: &bFunnytom118, Osto468, Valzar" to player
+			send "&9Owner: &bFunnytom118" to player
 			send "" to player
 			send "&8&m----------&r &9&lAdministrators &8&m----------" to player
 			stop
