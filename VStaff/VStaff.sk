@@ -1,5 +1,3 @@
-# NOTE TO VALZAR -- YOU MAY NEED TO EDIT SPACING, IVE JUST COPIED + PASTED #
-
 command /staff [<text>]:
     aliases: /helpers
     trigger:
@@ -13,14 +11,14 @@ command /staff [<text>]:
 			send "&9Sr. Helper: &b<none>" to player
 			send "&9Head Helper: &b<none>" to player
 			send "&8&m----------&r &9&lHelpers &8&m----------" to player
-            stop
+                        stop
 
 command /staff [<text>]:
     aliases: /mods, /moderators
     trigger:
-		if arg-1 is not set:
+        if arg-1 is not set:
 			make player execute "/blah"
-            send "&bPlease use either &9/staff Helpers&b/&9Moderators&b/&9Admins"
+                        send "&bPlease use either &9/staff Helpers&b/&9Moderators&b/&9Admins"
 		if arg-1 is "moderators":
 			send "&8&m----------&r &9&lModerators &8&m----------" to player
 			send "&9Jr. Moderator: &b<none>" to player
@@ -28,4 +26,4 @@ command /staff [<text>]:
 			send "&9Sr. Moderator: &b<none>" to player
 			send "&9Head Moderator: &b<none>" to player
 			send "&8&m----------&r &9&lModerators &8&m----------" to player
-            stop
+                        stop
