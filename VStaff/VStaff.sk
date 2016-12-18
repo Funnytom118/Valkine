@@ -19,7 +19,9 @@ command /staff [<text>]:
 			stop
 		if arg-1 is "admins":
 			send "&8&m----------&r &9&lAdministrators &8&m----------" to player
+			send "" to player
 			send "&9Admins: &bFunnytom118, Osto468, Valzar" to player
+			send "" to player
 			send "&8&m----------&r &9&lAdministrators &8&m----------" to player
 			stop
 		else:
