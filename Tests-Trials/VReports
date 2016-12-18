@@ -1,8 +1,18 @@
+options:
+  basecolor0: &9
+  basecolor1: &9&n
+  basecolor2: &8
+  basecolor3: &b
+  basecolor4: &r
+  discordchat: 
+  mainprefix: &9&lvReports &8->
+  mainperm: vreport.report
+
 command /report:
-  permission: vreport.report
-  permission message: &9&lvReports &8-> &bIf you don't have this command working, please contact an administrator.
+  permission: {@mainperm}
+  permission message: {@mainprefix} {@basecolor3}If you don't have this command working, please contact an administrator.
   description: Sends you a link to the discord to report bugs/issues!
   executable by: players
   trigger:
-    send "&9&lvReports &8-> &9&nhttps://discord.gg/vBeK6Dc&r &b- Post your issue in &9#general.
+    send {@mainprefix} {@basecolor1}https://discord.gg/vBeK6Dc&r {@basecolor4}- {@basecolor3}Post your issue in {@basecolor0}#general.
     stop
