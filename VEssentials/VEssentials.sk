@@ -41,7 +41,7 @@ options:
 on first join:
   set {vessentials::balance::%player's uuid%} to {@startbal}
 on damage:
-  if {vessentials::god::%player's uuid%} is true:
+  if {vessentials::god::%victim's uuid%} is true:
     cancel event
 
 command /bigtree [<text>]:
@@ -479,7 +479,7 @@ command /createkit [<text>]:
   permission: {@permprefix}.createkit
   permission message: {@permmsg}
   aliases: /vessentials:createkit
-  trigger
+  trigger:
     if arg 1 is set:
       player can't hold 36 wooden swords:
         if {vessentials::kits::%arg 1%} isn't set:
