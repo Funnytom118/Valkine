@@ -42,7 +42,7 @@ options:
 command /clearinventory [<player>]:
   permission: {@permprefix}.clearinventory
   permission message: {@permmsg}
-  aliases: /ci, /clear
+  aliases: /ci, /clear, /vessentials:ci, /vessentials:clear, /vessentials:clearinventory
   trigger:
     if arg 1 is not set:
       send "{@prefix}Your inventory has been cleared."
@@ -54,8 +54,9 @@ command /clearinventory [<player>]:
         clear the inventory of arg 1									
         stop	
       else:
-        send "{@noperm}"
+        send "{@permmsg}"
         stop
+
 on first join:
   set {vessentials::balance::%player's uuid%} to {@startbal}
 on damage:
@@ -63,6 +64,21 @@ on damage:
     cancel event
 on respawn:
   teleport player to the spawnpoint of {@spawnworld}
+on join:
+  if {vessentials::balance::%player's uuid%} isn't set:
+    set {vessentials::balance::%player's uuid%} to {@startbal}
+  if {feed.%player's uuid%.lastused} isn't set:
+    set {feed.%player's uuid%.lastused}to now
+  if {vessentials::fly::%player's uuid%} isn't set:
+    if player is flying:
+      set {vessentials::fly::%player's uuid%} to 1
+    if player isn't flying:
+      set {vessentials::fly::%player's uuid%} to 0
+  if {vessentials::god::%player's uuid%} isn't set:
+    set {vessentials::god::%player's uuid%} to false
+  if {vessentials.heal.%player's uuid%.lastused} isn't set:
+    set {vessentials.heal.%player's uuid%.lastused} to now
+
   
 command /bigtree [<text>]:
   aliases: /largetree
@@ -179,13 +195,13 @@ command /feed [<Player>]:
   executable by: players 
   trigger:
     if arg 1 isn't set:
-      set {_waited} to difference between {feed.%player%.lastused} and now
+      set {_waited} to difference between {feed.%player's uuid%.lastused} and now
       if {_waited} is less than {@feedcd}:
         send "{@prefix} You have to wait another %{_waited}% seconds to execute this command" to player
         stop
       if {_waited} is more than {@feedcd}:
         set the player's food level to 10
-        set {feed.%player%.lastused} to now
+        set {feed.%player's uuid%.lastused} to now
         send "{@prefix} Your hunger was sated" to player
         stop
     if arg 1 is set:
@@ -461,11 +477,11 @@ command /god [<Player>]:
       else:
         send "{@permmsg}" to player
     if arg 1 isn't set:
-      if {vessentials::god::%arg 1's uuid%} is false:
-        set {vessentials::god::%arg 1's uuid%} to true
+      if {vessentials::god::%player's uuid%} is false:
+        set {vessentials::god::%player's uuid%} to true
         send "{@prefix} God mode enabled" to player
-      if {vessentials::god::%arg 1's uuid%} is true:
-        set {vessentials::god::%arg 1's uuid%} to false
+      if {vessentials::god::%player's uuid%} is true:
+        set {vessentials::god::%player's uuid%} to false
         send "{@prefix} God mode disabled" to player
 #/hat
 command /heal [<Player>]:
@@ -475,13 +491,13 @@ command /heal [<Player>]:
   executable by: players 
   trigger:
     if arg 1 isn't set:
-      set {_waited} to difference between {vessentials.heal.%player%.lastused} and now
+      set {_waited} to difference between {vessentials.heal.%player's uuid%.lastused} and now
       if {_waited} is less than {@healcd}:
         send "{@prefix} You have to wait another %{_waited}% seconds to execute this command" to player
         stop
       if {_waited} is more than {@healcd}:
         heal the player by 10 hearts
-        set {vessentials.heal.%player%.lastused} to now
+        set {vessentials.heal.%player's uuid%.lastused} to now
         send "{@prefix} Youhave been healed" to player
         stop
     if arg 1 is set:
@@ -524,17 +540,28 @@ command /kit [<text>] [<Player>]:
   aliases: /vessentials:kit
   trigger:
     if arg 2 isn't set:
-      set {_waited} to difference between {vessentials::kits::lastused::%arg 1%::%player's uuid%} and now
-      if {_waited} is more than {@kitcd}:
-        if arg 1 is set:
-          if player has permission "{@permprefix}.kit.%arg 1%":
-            if {vessentials::kits::%arg 1%} is "true":
-              if {_kitconfirm::%player%} is "false":
-                if player can't hold 36 wooden swords:
-                  set {_kitconfirm::%player%} to true
-                  send "{@prefix} Please empty your inventory and press /kit %arg 1% again" to player
-                  stop
-                if player can hold 36 wooden swords:
+      if {vessentials::kits::lastused::%arg 1%::%player's uuid%} isn't set:
+        set {vessentials::kits::lastused::%arg 1%::%player's uuid%} to now
+        subtract 1 year from {vessentials::kits::lastused::%arg 1%::%player's uuid%}
+        set {_waited} to difference between {vessentials::kits::lastused::%arg 1%::%player's uuid%} and now
+        if {_waited} is more than {@kitcd}:
+          if arg 1 is set:
+            if player has permission "{@permprefix}.kit.%arg 1%":
+              if {vessentials::kits::%arg 1%} is "true":
+                if {_kitconfirm::%player%} is "false":
+                  if player can't hold 36 wooden swords:
+                    set {_kitconfirm::%player%} to true
+                    send "{@prefix} Please empty your inventory and press /kit %arg 1% again" to player
+                    stop
+                  if player can hold 36 wooden swords:
+                    set {_slot} to 0
+                    loop 36 times:
+                      set slot {_slot} of player to {vessentials::kits::%{_slot}%::%arg 1%}
+                      add 1 to {_slot}
+                    set {_kitconfirm::%player%} to false
+                    set {vessentials::kits::lastused::%arg 1%::%player's uuid%} to now
+                    send "{@prefix} Recieveing kit %arg 1%" to player
+                if {_kitconfirm::%player%} is "true":
                   set {_slot} to 0
                   loop 36 times:
                     set slot {_slot} of player to {vessentials::kits::%{_slot}%::%arg 1%}
@@ -542,46 +569,38 @@ command /kit [<text>] [<Player>]:
                   set {_kitconfirm::%player%} to false
                   set {vessentials::kits::lastused::%arg 1%::%player's uuid%} to now
                   send "{@prefix} Recieveing kit %arg 1%" to player
-              if {_kitconfirm::%player%} is "true":
+              else:
+                send "{@prefix} That kit doesn't exist" to player
+            else:
+              send "{@prefix} That kit doesn't exist" to player
+          if arg 1 isn't set:
+            send "{@prefix} These are all the kits available on the server: %{vessentials::kits::*}%" to player
+        if {_waited} is less than {@kitcd}:
+          send "{@prefix} Please wait another %{_waited}% before you can redeem this kit again" to player
+      if arg 2 is set:
+        if arg 1 is set:
+          if player has permission "{@permprefix}.kits.others":
+            if {vessentials::kits::%arg 1%} is "true":
+              if player can't hold 36 wooden swords:
+                send "{@prefix} %player% is trying to give you a(n) %arg 1% kit. However you don't have room for it. Please empty your inventory within 30 seconds" to arg 2
+                send "{@prefix} The player doesn't have room for the kit. They will get the kit when they have emptied their inventory." to player
+                wait 30 seconds
                 set {_slot} to 0
                 loop 36 times:
                   set slot {_slot} of player to {vessentials::kits::%{_slot}%::%arg 1%}
                   add 1 to {_slot}
-                set {_kitconfirm::%player%} to false
-                set {vessentials::kits::lastused::%arg 1%::%player's uuid%} to now
-                send "{@prefix} Recieveing kit %arg 1%" to player
-            else:
-              send "{@prefix} That kit doesn't exist" to player
+                send "{@prefix} You have recieved a(n) %arg 1% kit from %player%" to arg 2
+              if player can hold 36 wooden swords:
+                set {_slot} to 0
+                loop 36 times:
+                  set slot {_slot} of player to {vessentials::kits::%{_slot}%::%arg 1%}
+                  add 1 to {_slot}
+                send "{@prefix} Successfully sent kit to %arg 2%" to player
+                send "{@prefix} You have recieved a(n) %arg 1% kit from %player%" to arg 2
           else:
-            send "{@prefix} That kit doesn't exist" to player
+            send "{@permmsg}" to player
         if arg 1 isn't set:
           send "{@prefix} These are all the kits available on the server: %{vessentials::kits::*}%" to player
-      if {_waited} is less than {@kitcd}:
-        send "{@prefix} Please wait another %{_waited}% before you can redeem this kit again" to player
-    if arg 2 is set:
-      if arg 1 is set:
-        if player has permission "{@permprefix}.kits.others":
-          if {vessentials::kits::%arg 1%} is "true":
-            if player can't hold 36 wooden swords:
-              send "{@prefix} %player% is trying to give you a(n) %arg 1% kit. However you don't have room for it. Please empty your inventory within 30 seconds" to arg 2
-              send "{@prefix} The player doesn't have room for the kit. They will get the kit when they have emptied their inventory." to player
-              wait 30 seconds
-              set {_slot} to 0
-              loop 36 times:
-                set slot {_slot} of player to {vessentials::kits::%{_slot}%::%arg 1%}
-                add 1 to {_slot}
-              send "{@prefix} You have recieved a(n) %arg 1% kit from %player%" to arg 2
-            if player can hold 36 wooden swords:
-              set {_slot} to 0
-              loop 36 times:
-                set slot {_slot} of player to {vessentials::kits::%{_slot}%::%arg 1%}
-                add 1 to {_slot}
-              send "{@prefix} Successfully sent kit to %arg 2%" to player
-              send "{@prefix} You have recieved a(n) %arg 1% kit from %player%" to arg 2
-        else:
-          send "{@permmsg}" to player
-      if arg 1 isn't set:
-        send "{@prefix} These are all the kits available on the server: %{vessentials::kits::*}%" to player
 command /delkit [<text>]:
   permission: {@permprefix}.delkit
   permission message: {@permmsg}
@@ -668,7 +687,7 @@ command /speed [<text>] [<number>] [<Player>]:
                   send "{@prefix} Your walking speed was changed to %arg 2%" to arg 3
                   stop
                 else:
-                  send: "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
+                  send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
               else:
                 send "{@prefix} /speed <walking|flying> <speed> [player]" to player
             else:
@@ -821,7 +840,7 @@ command /warp [<text>]:
       else:
         send "{@prefix} That warp doesn't exist"
     if arg 1 isn't set:
-      send "{@prefix} %{vessentials::warps::*}%"
+      send "{@prefix} Available warps: %{vessentials::warps::*}%"
       stop
 command /delwarp [<text>]:
   permission: {@permprefix}.delwarp
@@ -882,7 +901,7 @@ command /eco [<text>] [<Player>] [<integer>]:
       else:
         send "{@specify}" to player
     else:
-      send "{@prefix} Please specify a balance" to player
+      send "{@prefix} /eco <take|give|reset|set> <player> <amount>" to player
 command /pay [<Player>] [<integer>]:
   permission: {@permprefix}.pay
   permission message: {@permmsg}
