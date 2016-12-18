@@ -24,6 +24,7 @@ options:
   feedcd: a minute                                                        #The cooldown between using /feed. Make a prefix [like a or 2] and then use minutes/hours/seconds/days. Use singular if it is only one (timeframe)
   healcd: a minute                                                        #The cooldown between using /heal. Make a prefix [like a or 2] and then use minutes/hours/seconds/days. Use singular if it is only one (timeframe)
   kitcd: a day                                                            #The cooldown between using each kit the player has permission to. Make a prefix [like a or 2] and then use minutes/hours/seconds/days. Use singular if it is only one (timeframe)
+  spawnworld: world                                                       #The name of the world your spawn is located in
   basecolor1: &b                                                          #The main color of all messages (Must include the & code)
   basecolor2: &9                                                          #The secondary color of all messages (Must include the & code)
   basecolor3: &8                                                          #The 'arrow' color of all messages (Must include the & code)
@@ -494,7 +495,7 @@ command /createkit [<text>]:
         else:
           send "{@prefix} This kit already exists" to player
       player can hold 36 wooden swords:
-        send "{@prefix} Your inventory is empty.
+        send "{@prefix} Your inventory is empty." to player
         stop
     else:
       send "{@prefix} /createkit <name>" to player
@@ -603,20 +604,26 @@ command /speed [<text>] [<text>] [<Player>]:
       if arg 1 is set:
         if arg 1 is "flying":
           if arg 2 is set:
-            if arg 2 is between -1 and 1:
-              set player's flying speed to arg 2
-              send "{@prefix} Flying speed changed to %arg 2%" to player
-              stop
+            if arg 2 is a number more than -1:
+              if arg 2 is a number less than 1:
+                set player's flying speed to arg 2
+                send "{@prefix} Flying speed changed to %arg 2%" to player
+                stop
+              else:
+                send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
             else:
               send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
           else:
             send "{@prefix} /speed <walking|flying> <speed> [player]" to player
         if arg 1 is "walking":
           if arg 2 is set:
-            if arg 2 is between -1 and 1:
-              set player's walking speed to arg 2
-              send "{@prefix} Walking speed changed to %arg 2%" to player
-              stop
+            if arg 2 is a number more than -1:
+              if arg 2 is a number less than 1:
+                set player's walking speed to arg 2
+                send "{@prefix} Walking speed changed to %arg 2%" to player
+                stop
+              else:
+                send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
             else:
               send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
           else:
@@ -631,19 +638,22 @@ command /speed [<text>] [<text>] [<Player>]:
           if arg 1 is set:
             if arg 1 is "flying":
               if arg 2 is set:
-                if arg 2 is between -1 and 1:
-                  set arg 3's flying speed to arg 2
-                  send "{@prefix} Flying speed changed to %arg 2% for %arg 3%" to player
-                  send "{@prefix} Your flying speed was changed to %arg 2%" to arg 3
-                  stop
+                if arg 2 is a number more than -1:
+                  if arg 2 is a number less than 1:
+                    set arg 3's flying speed to arg 2
+                    send "{@prefix} Flying speed changed to %arg 2% for %arg 3%" to player
+                    send "{@prefix} Your flying speed was changed to %arg 2%" to arg 3
+                    stop
+                  else:
+                    send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
                 else:
                   send "{@prefix} The speed has to be any one decimal number between -1 and 1. Like this: ""-0.1""" to player
               else:
                 send "{@prefix} /speed <walking|flying> <speed> [player]" to player
             if arg 1 is "walking":
               if arg 2 is set:
-                if arg 2 is more than -1:
-                  if arg 2 is less than 1:
+                if arg 2 is a number more than -1:
+                  if arg 2 is a number less than 1:
                     set arg 3's walking speed to arg 2
                     send "{@prefix} Walking speed changed to %arg 2% for %arg 3%" to player
                     send "{@prefix} Your walking speed was changed to %arg 2%" to arg 3
@@ -669,7 +679,7 @@ command /time [<text>]:
       set time in the player's world to arg 1
       send "{@prefix} Time set to %arg 1%
     else:
-      send "{@prefix} /time <##:##|## am/pm>
+      send "{@prefix} /time <##:##|## am/pm>" to player
 command /tree [<text>]:
   permission: {@permprefix}.tree
   permission message: {@permmsg}
@@ -700,9 +710,9 @@ command /tree [<text>]:
         stop
 #/unlimited
 #/workbench
-###############################################
-#                TELEPORTATION                #
-###############################################
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                                            TELEPORTATION                                  #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 command /setspawn:
   permission: {@permprefix}.setspawn
   permission message: {@permmsg}
@@ -711,7 +721,7 @@ command /setspawn:
   trigger:
     set {vessentials::spawn} to player's location
     send "{@prefix} Spawn location set!"
-    set the spawnpoint of world "%player's world%" to player's location
+    set the spawnpoint of world "{@spawnworld}" to player's location
     stop
 command /spawn [<Player>]:
   permission: {@permprefix}.spawn
@@ -823,9 +833,9 @@ command /delwarp [<text>]:
     else:
       send "{@prefix} /delwarp <name>" to player
       stop
-###############################################
-#                   ECONOMY                   #
-###############################################
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                                            ECONOMY                                        #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 command /balance [<offlinePlayer>]:
   permission: {@permprefix}.balance
   permission message: {@permmsg}
