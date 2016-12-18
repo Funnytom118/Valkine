@@ -1,5 +1,3 @@
-# # # # # ONE TAB SHOULD BE USED AS SPACING. NOT 2 SPACES, NOT 4 SPACES, 1 TAB.
-
 command /staff [<text>]:
 	aliases: /helpers, /helper, /moderator, /moderators, /admin, /admins
 	trigger:
@@ -27,4 +25,4 @@ command /staff [<text>]:
 			send "&8&m----------&r &9&lAdministrators &8&m----------" to player
                         stop
 		else:
-			send "&4&lError &cIncorrect syntax given. Use /staff Helpers, /staff Moderators, or /staff Admins."
+			send "&9&lError: &bIncorrect syntax given. &bUse &9/staff Helpers, &9/staff Moderators, &bor &9/staff Admins."
