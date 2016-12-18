@@ -515,32 +515,31 @@ command /god [<Player>]:
   permission message: {@permmsg}
   aliases: /vessentials:god
   trigger:
-      if arg 1 is set:
-        if player has permission "{@permprefix}.god.others":
-          if {vessentials::god::%arg 1's uuid%} is false:
-            set {vessentials::god::%arg 1's uuid%} to true
-            send "{@prefix} God mode enabled for %arg 1%" to player
-            send "{@prefix} God mode enabled" to arg 1
-          if {vessentials::god::%arg 1's uuid%} is true:
-            set {vessentials::god::%arg 1's uuid%} to false
-            send "{@prefix} God mode disabled for %arg 1%" to player
-            send "{@prefix} God mode disabled" to arg 1
-          if {vessentials::god::%arg 1's uuid%} isn't set:
-            set {vessentials::god::%arg 1's uuid%} to false
-            send "{@prefix} Try again" to player
-        else:
-          send "{@permmsg}" to player
-      if arg 1 isn't set:
-        if {vessentials::god::%player's uuid%} is false:
-          set {vessentials::god::%player's uuid%} to true
-          send "{@prefix} God mode enabled" to player
-        if {vessentials::god::%player's uuid%} is true:
-          set {vessentials::god::%player's uuid%} to false
-          send "{@prefix} God mode disabled" to player
-        if {vessentials::god::%players's uuid%} isn't set:
-          set {vessentials::god::%players's uuid%} to false
+    if arg 1 is set:
+      if player has permission "{@permprefix}.god.others":
+        if {vessentials::god::%arg 1's uuid%} is false:
+          set {vessentials::god::%arg 1's uuid%} to true
+          send "{@prefix} God mode enabled for %arg 1%" to player
+          send "{@prefix} God mode enabled" to arg 1
+        if {vessentials::god::%arg 1's uuid%} is true:
+          set {vessentials::god::%arg 1's uuid%} to false
+          send "{@prefix} God mode disabled for %arg 1%" to player
+          send "{@prefix} God mode disabled" to arg 1
+        if {vessentials::god::%arg 1's uuid%} isn't set:
+          set {vessentials::god::%arg 1's uuid%} to false
           send "{@prefix} Try again" to player
-
+      else:
+        send "{@permmsg}" to player
+    if arg 1 isn't set:
+      if {vessentials::god::%player's uuid%} is false:
+        set {vessentials::god::%player's uuid%} to true
+        send "{@prefix} God mode enabled" to player
+      if {vessentials::god::%player's uuid%} is true:
+        set {vessentials::god::%player's uuid%} to false
+        send "{@prefix} God mode disabled" to player
+      if {vessentials::god::%players's uuid%} isn't set:
+        set {vessentials::god::%players's uuid%} to false
+        send "{@prefix} Try again" to player
 #/hat
 
 command /vessentials:heal [<Player>]:
