@@ -38,7 +38,24 @@ options:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
  
 #http://wiki.ess3.net/wiki/Command_Reference for alphabetical ordering of commands which are currently in Essentials.
-
+			
+command /clearinventory [<player>]:
+  permission: {@permprefix}.clearinventory
+  permission message: {@permmsg}
+  aliases: /ci, /clear
+  trigger:
+   if arg 1 is not set:
+			send "{@prefix}Your inventory has been cleared."
+			clear the player's inventory
+			stop
+		if arg 1 is set:	
+			if player has permission "{@permprefix}.clearinventory.others":
+				send "{@prefix}%arg 1%'s inventory has been cleared."		
+				clear the inventory of arg 1									
+				stop	
+			else:
+				send "{@noperm}"
+				stop
 on first join:
   set {vessentials::balance::%player's uuid%} to {@startbal}
 on damage:
