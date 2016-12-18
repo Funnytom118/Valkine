@@ -1,8 +1,6 @@
 command /staff [<text>]:
 	aliases: /helpers, /helper, /moderator, /moderators, /admin, /admins
 	trigger:
-		if arg-1 is not set:
-			send "&bPlease use either &9/staff Helpers&b/&9Moderators&b/&9Admins"
 		if arg-1 is "helpers":
 			send "&8&m----------&r &9&lHelpers &8&m----------" to player
 			send "&9Jr. Helper: &b<none>" to player
