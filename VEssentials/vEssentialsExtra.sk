@@ -1,0 +1,47 @@
+command /heal:
+    permission: heal.use
+    permission message: &9&lvEssentials &8&l-> &bYou do not have the correct permission to use this.
+    aliases: /h
+    trigger:
+        heal the player by 10 hearts
+        send "&9&lvEssentials &8&l-> &bYou are now at your most fine and fittest condition." to executor
+
+command /food:
+    permission: food.use
+    permission message: &9&lEssentials &8&l-> &bYou do not have the correct permission to use this.
+    aliases: /f
+    trigger:
+        set the player's food level to 10
+        send "&9&lvEssentials &8&l-> &bYour appetite has been sated." to executor
+
+command /adminmode:
+  permission: adminmode.use
+  permission message: &9&lEssentials &8&l-> &bYou do not have the correct permission to use this.
+  aliases: /am, /amode, /adminm
+  trigger:
+    if {adminmode::%player's uuid%} is false:
+      set {adminmode::%player's uuid%} to true
+      send "&9&lvEssentials &8&l-> &bAdmin mode &9&l%{adminmode::%player's uuid%}% &bfor &9%player%"
+      set {_player} to player
+      loop all players:
+        if loop-player has permission "adminmode.use":
+          send "&9&lvEssentials &8&l-> &bAdmin mode has been enabled for %{_player}%" to loop-player
+      stop
+    if {adminmode::%player's uuid%} is true:
+      set {adminmode::%player's uuid%} to false
+      send "&9&lvEssentials &8&l-> &bAdmin mode &9&l%{adminmode::%player's uuid%}% &bfor &9%player%"
+      set {_player} to player
+      loop all players:
+        if loop-player has permission "adminmode.use":
+          send "&9&lvEssentials &8&l-> &bAdmin mode has been disabled for %{_player}%" to loop-player
+      stop
+
+on chat:
+  if {adminmode::%player's uuid%} is true:
+    set message to "&c%message%"
+
+on join:
+    set join message to "&9%player% &bjoined the game."
+
+on quit:        
+    set quit message to  "&9%event-player% &bleft the game."
