@@ -4,4 +4,5 @@ command /report:
   description: Sends you a link to the discord to report bugs/issues!
   executable by: players
   trigger:
-    send "&9&lvReports &8-> &b
+    send "&9&lvReports &8-> &9&nhttps://discord.gg/vBeK6Dc&r &b- Post your issue in &9#general.
+    stop
