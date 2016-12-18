@@ -54,7 +54,7 @@ on join:
 on chat:
   if message contains "&a":
     if player has permission "{@permprefix}.chatcolors.green":
-      set message to "&a%message%"
+      replace "&a" with "&a%message%"
   if message contains "&b":
     if player has permission "{@permprefix}.chatcolors.aqua":
       set message to "&b%message%"
