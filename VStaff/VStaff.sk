@@ -1,7 +1,7 @@
 # # # # # ONE TAB SHOULD BE USED AS SPACING. NOT 2 SPACES, NOT 4 SPACES, 1 TAB.
 
 command /staff [<text>]:
-	aliases: /helpers, /helper
+	aliases: /helpers, /helper, /moderator, /moderators, /admin, /admins
 	trigger:
 		if arg-1 is not set:
 			send "&bPlease use either &9/staff Helpers&b/&9Moderators&b/&9Admins"
@@ -13,12 +13,6 @@ command /staff [<text>]:
 			send "&9Head Helper: &b<none>" to player
 			send "&8&m----------&r &9&lHelpers &8&m----------" to player
                         stop
-
-command /staff [<text>]:
-	aliases: /mods, /moderators
-	trigger:
-		if arg-1 is not set:
-			send "&bPlease use either &9/staff Helpers&b/&9Moderators&b/&9Admins"
 		if arg-1 is "moderators":
 			send "&8&m----------&r &9&lModerators &8&m----------" to player
 			send "&9Jr. Moderator: &b<none>" to player
@@ -27,14 +21,10 @@ command /staff [<text>]:
 			send "&9Head Moderator: &b<none>" to player
 			send "&8&m----------&r &9&lModerators &8&m----------" to player
                         stop
-			
-command /staff [<text>]:
-	aliases: /admins, /admin
-	trigger:
-		if arg-1 is not set:
-			send "&bPlease use either &9/staff Helpers&b/&9Moderators&b/&9Admins"
 		if arg-1 is "admins":
 			send "&8&m----------&r &9&lAdministrators &8&m----------" to player
 			send "&9Admins: &bFunnytom118, Osto468, Valzar" to player
 			send "&8&m----------&r &9&lAdministrators &8&m----------" to player
-                        stop 
+                        stop
+		else:
+			send "&4&lError &cIncorrect syntax given. Use /staff Helpers, /staff Moderators, or /staff Admins."
