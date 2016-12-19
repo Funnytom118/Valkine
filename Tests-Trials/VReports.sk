@@ -14,5 +14,5 @@ command /report:
   description: Sends you a link to the discord to report bugs/issues!
   executable by: players
   trigger:
-    send {@mainprefix} {@basecolor1}https://discord.gg/vBeK6Dc&r {@basecolor4}- {@basecolor3}Post your issue in {@basecolor0}{@discordchat}.
+    send "{@mainprefix} {@basecolor1}https://discord.gg/vBeK6Dc&r {@basecolor4}- {@basecolor3}Post your issue in {@basecolor0}{@discordchat}."
     stop
