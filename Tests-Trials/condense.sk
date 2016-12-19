@@ -5,6 +5,47 @@ command /condense:
   trigger:
     if player has more than 9 iron ingots:
       loop all iron ingots:
-        take loop-value iron ingots from player
-        give player loop-value/9 iron blocks
-        give player loop-value-loop-value/9 iron ingots
+        set loop value to {_loopvalue}
+        if {_loopvalue} is divisible by 9:
+          take loop-value iron ingots from player
+          give player {_loopvalue}/9 iron blocks
+        if {_loopvalue} isn't divisible by 9:
+          remove 1 from {_loopvalue}
+          if {_loopvalue} is divisible by 9:
+            give player {_loopvalue}/9 iron blocks
+            give player 1 iron ingot
+          else if {_loopvalue} isn't divisible by 9:
+            remove 1 from {_loopvalue}
+            if {_loopvalue} is divisible by 9:
+              give player {_loopvalue}/9 iron blocks
+              give player 2 iron ingots
+            else if {_loopvalue} isn't divisible by 9:
+              remove 1 from {_loopvalue}
+              if {_loopvalue} is divisible by 9:
+                give player {_loopvalue}/9 iron blocks
+                give player 3 iron ingots
+              else if {_loopvalue} isn't divisible by 9:
+                remove 1 from {_loopvalue}
+                if {_loopvalue} is divisible by 9:
+                  give player {_loopvalue}/9 iron blocks
+                  give player 4 iron ingots
+                else if {_loopvalue} isn't divisible by 9:
+                  remove 1 from {_loopvalue}
+                  if {_loopvalue} is divisible by 9:
+                    give player {_loopvalue}/9 iron blocks
+                    give player 5 iron ingots
+                  else if {_loopvalue} isn't divisible by 9:
+                    remove 1 from {_loopvalue}
+                    if {_loopvalue} is divisible by 9:
+                      give player {_loopvalue}/9 iron blocks
+                      give player 6 iron ingots
+                    else if {_loopvalue} isn't divisible by 9:
+                      remove 1 from {_loopvalue}
+                      if {_loopvalue} is divisible by 9:
+                        give player {_loopvalue}/9 iron blocks
+                        give player 7 iron ingots
+                      else if {_loopvalue} isn't divisible by 9:
+                        remove 1 from {_loopvalue}
+                        if {_loopvalue} is divisible by 9:
+                          give player {_loopvalue}/9 iron blocks
+                          give player 8 iron ingots
