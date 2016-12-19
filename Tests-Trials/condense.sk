@@ -1,0 +1,10 @@
+command /condense:
+  permission: {@permprefix}.condense
+  permission message: {@permmsg}
+  aliases: /vessentials:condense
+  trigger:
+    if player has more than 9 iron ingots:
+      loop all iron ingots:
+        take loop-value iron ingots from player
+        give player loop-value/9 iron blocks
+        give player loop-value-loop-value/9 iron ingots
