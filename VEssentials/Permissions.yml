@@ -32,28 +32,10 @@ vessentials.delkit
 vessentials.kit
 vessentials.kit.[kitname]
 vessentials.kit.others
-vessentials.chatcolors.green
-vessentials.chatcolors.aqua
-vessentials.chatcolors.red
-vessentials.chatcolors.purple
-vessentials.chatcolors.yellow
-vessentials.chatcolors.white
-vessentials.chatcolors.darkblue
-vessentials.chatcolors.darkgreen
-vessentials.chatcolors.darkaqua
-vessentials.chatcolors.darkred
-vessentials.chatcolors.darkpurple
-vessentials.chatcolors.gold
-vessentials.chatcolors.grey
-vessentials.chatcolors.darkgrey
-vessentials.chatcolors.blue
-vessentials.chatcolors.black
-vessentials.chatformats.bold
-vessentials.chatformats.obfuscated
-vessentials.chatformats.strikethrough
-vessentials.chatformats.underline
-vessentials.chatformats.italic
-vessentials.chatformats.reset
+vessentials.color.all (or vessentials.color.(0-9/a-f)
+vessentials.chat.format (or vessentials.chat.(l/m/n/o/r)
+vessentials.chat.magic (or vessentials.chat.k)
+vessentials
 vessentials
 vessentials
 vessentials
