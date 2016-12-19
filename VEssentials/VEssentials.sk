@@ -672,7 +672,10 @@ command /delkit [<text>]:
   permission message: {@permmsg}
   aliases: /vessentials:delkit
   trigger:
-    if arg 1 is set:
+    if arg 1 is "all":
+      delete {vessentials::kits::*}
+      send "{@prefix} Removed all kits"
+    else:
       if {vessentials::kits::%arg 1%} is "true":
         remove arg 1 from {vessentials::kits::*}
         delete {vessentials::kits::%arg 1%}
@@ -683,7 +686,13 @@ command /delkit [<text>]:
         send "{@prefix} Kit removed" to player
         stop
       else:
-        send "{@prefix} Kit doesn't exist" to player
+        remove arg 1 from {vessentials::kits::*}
+        delete {vessentials::kits::%arg 1%}
+        set {_slot} to 0
+        loop 36 times:
+          delete {vessentials::kits::%{_slot}%::%arg 1%}
+          add 1 to {_slot}
+        send "{@prefix} Kit removed" to player
         stop
     else:
       send "{@prefix} /delkit <name>" to player
@@ -1020,3 +1029,26 @@ command /clearinventory [<player>]:
       else:
         send "{@permmsg}"
         stop
+command /killall [<entity>] [<text>]:
+  permission: {@permprefix}.killall
+  permission message: {@permmsg}
+  aliases: /vessentials:killall
+  trigger:
+    if arg 2 isn't set:
+      if arg 1 is set:
+        kill all arg 1 in the player's world
+        clear drops
+        send "{@prefix} Killed all %arg 1%" to player
+        stop
+      if arg 1 isn't set:
+        send "{@prefix} /killall <entity> [drops]" to player
+        stop
+    if arg 2 is set:
+      if arg 2 is "drops":
+        if arg 1 is set:
+          kill all arg 1 in the player's world
+          send "{@prefix} Killed all %arg 1%" to player
+          stop
+        if arg 1 isn't set:
+          send "{@prefix} /killall <entity> [drops]" to player
+          stop
