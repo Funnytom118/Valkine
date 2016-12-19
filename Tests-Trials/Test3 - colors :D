@@ -1,0 +1,13 @@
+function removeColors(text: string) :: text:
+    set {_colors::*} to integers from 0 to 9 and split "abcdefonmrkl" by ""
+    set {_text::*} to {_text} split by ""
+    loop {_colors::*}:
+        if {_text} contains "&%loop-value%":
+            player doesn't have permission "color.&%loop-value%" or "color.all"
+            loop {_text::*}:
+                loop-value-2 = "&"
+                {_text::%loop-index-2 parsed as int + 1%} = "%loop-value-1%"
+                delete {_text::%loop-index-2%}
+                delete {_text::%loop-index-2 parsed as int + 1%}
+        set {_text} to join {_text::*} by ""
+    return colored {_text}
