@@ -917,6 +917,13 @@ command /warp [<text>]:
     if arg 1 isn't set:
       send "{@prefix} Available warps: %{vessentials::warps::*}%"
       stop
+command /warps:
+  permission: {@permprefix}.warps
+  permission message: {@permmsg}
+  aliases: /vessentials:warps
+  trigger:
+    send "{@prefix} Available warps: %{vessentials::warps::*}%" to player
+    stop
 command /delwarp [<text>]:
   permission: {@permprefix}.delwarp
   permission message: {@permmsg}
