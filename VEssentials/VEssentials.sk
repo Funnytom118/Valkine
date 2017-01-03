@@ -1194,7 +1194,37 @@ command /lightning [<player>] [<number>]:
     else:
       strike lightning effect at player
       stop
-
+command /ping [<String>]:
+  permission: {@permprefix}.mod.ping
+  permission message: {@permmsg}
+  aliases: /pong, /echo, /vessentials:ping
+  trigger:
+    if arg 1 is specified:
+      send "%arg 1%" to player
+      stop
+    else:
+      send "Pong!" to player
+      stop
+command /spawnmob [<mob>] [<number>] [<player>]:
+  permission: {@permprefix}.mod.spawnmob
+  permission message: {@permmsg}
+  aliases: /vessentials:spawnmob, /mob
+  trigger:
+    if arg 1 is set:
+      if arg 2 is set:
+        if arg 3 is set:
+          spawn arg 2 arg 1 at arg 3
+          send "{@prefix} Spawned %arg 2% %arg 1%(s) at %arg 3%" to player
+          stop
+        else:
+          spawn arg 2 arg 1 at the block above targeted block
+          send "{@prefix} Spawned %arg 2% %arg 1%(s)" to player
+          stop
+      else:
+        spawn {@defaultspawnmob} arg 1 at the block above targeted block
+        send "{@prefix} Spawned {@defaultspawnmob} %arg 1%(s)" to player
+    else:
+      send "{@prefix} /spawnmob <mob> [amount] [player]" to player
 command /sudo [<text>] [<string>]:
   permission: {@permprefix}.mod.sudo
   permission message: {@permmsg}
@@ -1211,4 +1241,62 @@ command /sudo [<text>] [<string>]:
     else:
       send "{@prefix} /sudo <player> <command>" to player
       stop
-    stop
+command /vanish [<offlinePlayer>] [<text>]:
+  permission: {@permprefix}.mod.vanish
+  permission message: {@permmsg}
+  aliases: /v, /vessentials:vanish
+  trigger:
+    if arg 1 is set:
+      if arg 1 is online:
+        if arg 2 is set:
+          if arg 2 is "on":
+            set {_vessentials::vanish::%arg 1's uuid%} to true
+            give arg 1 invisibility 2
+            send "{@prefix} Vanish enabled for %arg 1%" to player
+            send "{@prefix} You are now hidden from regular players" to arg 1
+            stop
+          if arg 2 is "off":
+            delete {_vessentials::vanish::%arg 1's uuid%}
+            remove invisibility 2 from arg 1
+            send "{@prefix} Vanish disabled for %arg 1%" to player
+            send "{@prefix} You are no longer hidden from players" to arg 1
+            stop
+        else:
+          if {_vessentials::vanish::%arg 1's uuid%} is true:
+            delete {_vessentials::vanish::%arg 1's uuid%}
+            remove invisibility 2 from arg 1
+            send "{@prefix} Vanish disabled for %arg 1%" to player
+            send "{@prefix} You are no longer hidden from players" to arg 1
+            stop
+          if {_vessentials::vanish::%arg 1's uuid%} isn't set:
+            set {_vessentials::vanish::%arg 1's uuid%} to true
+            give arg 1 invisibility 2
+            send "{@prefix} Vanish enabled for %arg 1%" to player
+            send "{@prefix} You are now hidden from regular players" to arg 1
+            stop
+      if arg 1 is "on":
+        set {_vessentials::vanish::%player's uuid%} to true
+        give player invisibility 2
+        send "{@prefix} Vanish enabled" to player
+        send "{@prefix} You are now hidden from regular players" to player
+        stop
+      if arg 1 is "off":
+        delete {_vessentials::vanish::%player's uuid%}
+        remove invisibility 2 from player
+        send "{@prefix} Vanish disabled" to player
+        send "{@prefix} You are no longer hidden from players" to player
+        stop
+    else:
+      if {_vessentials::vanish::%player's uuid%} isn't set:
+        set {_vessentials::vanish::%player's uuid%} to true
+        give player invisibility 2
+        send "{@prefix} Vanish enabled" to player
+        send "{@prefix} You are now hidden from regular players" to player
+        stop
+      if {_vessentials::vanish::%player's uuid%} is true:
+        delete {_vessentials::vanish::%player's uuid%}
+        remove invisibility 2 from player
+        send "{@prefix} Vanish disabled" to player
+        send "{@prefix} You are no longer hidden from players" to player
+        stop       
+
