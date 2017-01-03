@@ -979,7 +979,7 @@ command /baltop:
     message "&7&m------------&r &5&lBalancetop &7&m------------"
     loop {_high.to.low.list::*}:
       add 1 to {_result}
-      send "&8[&5%{_result}%&8] &7%loop-value%&8 > &5%{vsoftware::mobkillstotal::%loop-value%}% &7mobs killed"
+      send "&8[&5%{_result}%&8] &7%loop-value%&8 > &5$%{vessentials::balance::%loop-value%}%"
       if {_result} is 10:
         stop
 command /eco [<text>] [<Player>] [<integer>]:
