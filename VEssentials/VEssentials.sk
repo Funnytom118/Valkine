@@ -810,7 +810,13 @@ command /tree [<text>]:
         send "{@prefix}%arg 1% is not a tree type. The only tree types are oak, spruce, and jungle."
         stop
 #/unlimited
-#/workbench
+command /workbench:
+  permission: {@permprefix}.workbench
+  permission message: {@permmsg}
+  aliases: /wb, /wbench, /vessentials:workbench
+  trigger:
+    open a workbench for the player
+    stop
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                                            TELEPORTATION                                  #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -1082,7 +1088,6 @@ command /antioch:
     set block above targeted block to live tnt
     send "{@prefix} TnT Spawned!" to player
     stop
-    
 command /broadcast [<string>]:
   permission: {@permprefix}.admin.broadcast
   permission message: {@permmsg}
@@ -1094,7 +1099,6 @@ command /broadcast [<string>]:
     else:
       send "{@prefix} /broadcast <message>" to player
       stop
-
 command /burn [<Player>] [<number>]:
   permission: {@permprefix}.mod.burn
   permission message: {@permmsg}
@@ -1110,7 +1114,6 @@ command /burn [<Player>] [<number>]:
         send "{@prefix} /burn <player> <seconds>" to player
     else:
       send "{@prefix} /burn <player> <seconds>" to player
-      
 command /enderchest [<player>]:
   permission: {@permprefix}.enderchest
   permission message: {@permmsg}
@@ -1126,7 +1129,6 @@ command /enderchest [<player>]:
     else:
       open the player's ender chest to player
       stop
-      
 command /extinguish [<player>]:
   permission: {@permprefix}.mod.extinguish
   permission message: {@permmsg}
@@ -1140,7 +1142,59 @@ command /extinguish [<player>]:
     else:
       send "{@prefix} /ext <player>" to player
       stop
-  
+command /fireball:
+  permission: {@permprefix}.mod.fireball
+  permission message: {@permmsg}
+  aliases: /vessentials:fireball
+  trigger:
+    shoot a fireball from the player
+    stop
+command /invsee [<player>]:
+  permission: {@permprefix}.mod.invsee
+  permission message: {@permmsg}
+  aliases: /vessentials:invsee
+  trigger:
+    if arg 1 is specified:
+      open arg 1's inventory to player
+      stop
+    else:
+      send "{@prefix} /invsee <player>" to player
+      stop
+command /kill [<player>]:
+  permission: {@permprefix}.mod.kill
+  permission message: {@permmsg}
+  aliases: /vessentials:kill
+  trigger:
+    if arg 1 is specified:
+      if player has permission "{@permprefix}.mod.kill.others":
+        kill arg 1
+        send "{@permprefix} Killed %arg 1%" to player
+        stop
+      else:
+        send "{@permmsg}" to player
+    else:
+      kill player
+      stop
+command /lightning [<player>] [<number>]:
+  permission: {@permprefix}.mod.lightning
+  permission message: {@permmsg}
+  usage: /lightning [player] [damage]
+  aliases: /thor, /strike, /smite, /shock, /vessentials:lightning
+  trigger:
+    if arg 1 is specified:
+      if arg 2 is specified:
+        strike lightning effect at arg 1
+        remove arg 2 hearts from the player's health level
+        send "{@prefix} Stroke %arg 1%" to player
+        stop
+      else:
+        strike lightning at arg 1
+        send "{@prefix} Stroke %arg 1% to player
+        stop
+    else:
+      strike lightning effect at player
+      stop
+
 command /sudo [<text>] [<string>]:
   permission: {@permprefix}.mod.sudo
   permission message: {@permmsg}
