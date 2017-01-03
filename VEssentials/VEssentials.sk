@@ -953,6 +953,32 @@ command /balance [<offlinePlayer>]:
       send "{@prefix} &aBalance of %arg 1%&a: &c$%{vessentials::balance::%arg 1's uuid%}%" to player
     if arg 1 isn't set:
       send "{@prefix} &aBalance: &c$%{vessentials::balance::%player's uuid%}%" to player
+command /baltop:
+  permission: {@permprefix}.baltop
+  trigger:
+  loop {vessentials::balance::*}:
+    add 1 to {_size}
+    if {_low.to.high.list::%loop-value%} is not set:
+      set {_low.to.high.list::%loop-value%} to loop-index
+    else:
+      set {_n} to 0
+      loop {_size} times:
+        set {_n} to {_n}+1
+        {_low.to.high.list::%loop-value-1%.%{_n}%} is not set
+        set {_low.to.high.list::%loop-value-1%.%{_n}%} to loop-index
+        stop loop
+    wait 1 tick
+    set {_n} to size of {_low.to.high.list::*}
+    loop {_low.to.high.list::*}:
+      set {_high.to.low.list::%{_n}%} to loop-value
+      set {_n} to {_n}-1
+    wait 1 tick
+    message "&7&m------------&r &5&lBalancetop &7&m------------"
+    loop {_high.to.low.list::*}:
+      add 1 to {_result}
+      send "&8[&5%{_result}%&8] &7%loop-value%&8 > &5%{vsoftware::mobkillstotal::%loop-value%}% &7mobs killed"
+      if {_result} is 10:
+        stop
 command /eco [<text>] [<Player>] [<integer>]:
   permission: {@permprefix}.eco
   permission message: {@permmsg}
