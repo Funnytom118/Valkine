@@ -523,7 +523,11 @@ command /god [<Player>]:
       if {vessentials::god::%players's uuid%} isn't set:
         set {vessentials::god::%players's uuid%} to false
         send "{@prefix} Try again" to player
-#/hat
+#command /hat:
+#  permission: {@permprefix}.hat
+#  permission message: {@permmsg}
+#  aliases: /vessentials:hat
+#  trigger:
 
 command /vessentials:heal [<Player>]:
   permission: {permprefix}.heal
@@ -683,7 +687,13 @@ command /delkit [<text>]:
       stop
 #/more
 #/ptime
-#/repair
+command /repair:
+  permission: {@permprefix}.repair
+  permission message: {@permmsg}
+  aliases: /vessentials:repair, /fix
+  trigger:
+    if player is holding a tool:
+      repair the held tool's durability
 command /skull [<offlinePlayer>]:
   permission: {@permprefix}.skull
   permission message: {@permmsg}
