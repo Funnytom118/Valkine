@@ -490,8 +490,40 @@ command /gamemode [<text>] [<Player>]:
           send "{@prefix} /gamemode <survival|s|0|creative|c|1|adventure|a|2|spectator|sp|3> [player]" to player
     if arg 1 isn't set:
       send "{@prefix} /gamemode <survival|s|0|creative|c|1|adventure|a|2|spectator|sp|3> [player]" to player
+      
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# THIS /GIVE COMMAND SHOULD BE CHECKED AND FINALIZED BY OSTO  #  THIS /GIVE COMMAND SHOULD BE CHECKED AND FINALIZED BY OSTO   #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-#/give
+command /give [<item>] [<number>] [<player>]:
+	description: Give Items to Yourself or Others
+	permission: perm.give
+	usage: /give <item> [amount] [player]
+	permission message: {@noperm}
+	aliases: /item, /i
+	trigger:
+		if arg 1 is not set:
+			send "{@prefix}You must specify an item."
+			stop
+		if arg 1 is set:
+			if arg 2 is not set:
+				give 64 of arg 1 to player
+				send "{@prefix}You have received 64 of %arg 1%."
+				stop
+			if arg 2 is set:
+				if arg 3 is not set:
+					give arg 2 of arg 1 to player
+					send "{@prefix}You have received %arg 2% of %arg 1%."
+					stop
+				if arg 3 is set:
+					if player has permission "skess.give.others":
+						give arg 2 of arg 1 to arg 3
+						send "{@prefix}You have received %arg 2% of %arg 1%." to arg 3
+						send "{@prefix}%arg 3% has been given %arg 2% of %arg 1%."
+						stop
+					else:
+						send "{@noperm}"
+						stop
 
 command /god [<Player>]:
   permission: {@permprefix}.god
@@ -523,11 +555,39 @@ command /god [<Player>]:
       if {vessentials::god::%players's uuid%} isn't set:
         set {vessentials::god::%players's uuid%} to false
         send "{@prefix} Try again" to player
+	
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# THIS /HAT COMMAND SHOULD BE CHECKED AND FINALIZED BY OSTO  #  THIS /HAT COMMAND SHOULD BE CHECKED AND FINALIZED BY OSTO   #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 #command /hat:
 #  permission: {@permprefix}.hat
 #  permission message: {@permmsg}
 #  aliases: /vessentials:hat
 #  trigger:
+command /hat:
+	description: Give Yourself a Hat
+	permission: perm.hat
+	usage: /hat(head)
+	permission message: {@noperm}
+	aliases: /head
+	trigger:
+		if the player is holding air:
+			send "{@prefix}You cannot equip an air hat..."
+			stop
+		if id of the player's tool is more than 255:
+			send "{@prefix}You cannot use tools as hats."
+			stop
+		if id of the player's tool is less than 255:
+			if the player's helmet slot is empty:
+				set {_hat} to 1 of the player's tool
+				remove {_hat} from the player's inventory
+				equip the player with {_hat}
+				message "{@prefix}You have been equipped with a %{_hat}% hat."
+				stop
+			else:
+				send "{@prefix}You must first empty your helmet slot before using /hat."
+				stop
 
 command /vessentials:heal [<Player>]:
   permission: {permprefix}.heal
